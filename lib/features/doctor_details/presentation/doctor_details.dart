@@ -9,6 +9,8 @@ import 'package:doctor_appointment/core/widgets/app_button.dart';
 import 'package:doctor_appointment/core/widgets/available_time.dart';
 import 'package:doctor_appointment/core/widgets/calendar.dart';
 import 'package:doctor_appointment/features/alldoctors/logic/all_doctor_state.dart';
+import 'package:doctor_appointment/features/doctor_details/logic/store_appointment_cubit.dart';
+import 'package:doctor_appointment/features/doctor_details/logic/store_appointment_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -60,8 +62,14 @@ class DoctorDetails extends StatelessWidget {
 
           SizedBox(width: 0),
         ],
-        leading: InkWell(child: Icon(Icons.arrow_back)),
+        leading: IconButton(
+          onPressed: () {
+            context.pop();
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
       ),
+
       body: BlocProvider(
         create: (context) => MockAllDoctorsCubit()..getAllDoctors(),
         child: CustomScrollView(
@@ -208,7 +216,7 @@ class DoctorDetails extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
-                      spacing: 10,
+                      spacing: 5,
 
                       crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -237,6 +245,7 @@ class DoctorDetails extends StatelessWidget {
                         Calendar(),
                         SizedBox(height: 10),
                         Text("Available Time", style: TxtStyle.font18SemiBold),
+                        SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -277,6 +286,7 @@ class DoctorDetails extends StatelessWidget {
                             Text("Evening", style: TxtStyle.font14SemiBold),
                           ],
                         ),
+                        SizedBox(height: 10),
                         BlocBuilder<MockAllDoctorsCubit, AllDoctorsStates>(
                           builder: (context, state) {
                             if (state is AllDoctorLoadingState) {
@@ -298,76 +308,68 @@ class DoctorDetails extends StatelessWidget {
                             return SizedBox();
                           },
                         ),
-                        SizedBox(height: 10),
-                        AppButton(
-                          barWidth: double.infinity,
-                          txt: "Confirm appointment",
-                          onPress: () async {
-                            if (selectedTimeSlot == null) {
+                        BlocConsumer<
+                          StoreAppointmentCubit,
+                          StoreAppointmentStates
+                        >(
+                          listener: (context, state) {
+                            if (state is StoreLoadingState) {
+                              // 2.show dialog
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                },
+                                barrierDismissible: false,
+                                // important for modal dialog
+                              );
+                            }
+                            if (state is StoreErrorState) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text("Please select a time slot"),
+                                  content: Text(state.message),
+                                  backgroundColor: Colors.red,
+                                  behavior: SnackBarBehavior.floating,
                                 ),
                               );
-                              return;
+                              context.pop();
                             }
-                            // 2.show dialog
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              },
-                              barrierDismissible: false,
-                              // important for modal dialog
+                          },
+                          builder: (context, state) {
+                            bool isLoading = state is StoreLoadingState;
+                            return SafeArea(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 16,
+                                ),
+                                child: AppButton(
+                                  barWidth: double.infinity,
+                                  txt: isLoading
+                                      ? "Loading..."
+                                      : "Confirm appointment",
+                                  onPress: isLoading
+                                      ? (){}
+                                      : () {
+                                          if (selectedTimeSlot == null) {
+                                            ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  "Please select a time slot",
+                                                ),
+                                              ),
+                                            );
+                                            return;
+                                          }
+                                          context.read<StoreAppointmentCubit>().storeAppointment();
+                                        },
+                                ),
+                              ),
                             );
-                            try {
-                              final token =
-                                  await SecureStorageHelper.getToken();
-                              final dio = Dio();
-                              final response = await dio.post(
-                                ApiConst.storeAppointmentURL,
-                                data: {
-                                  'doctor_id': 1,
-                                  'start_time': '2026-10-11 10:00:00',
-                                  'notes': 'standard appointment',
-                                },
-                                options: Options(
-                                  headers: {
-                                    'Authorization': 'Bearer $token',
-                                    'Accept': 'application/json',
-                                  },
-                                ),
-                              );
-                              if (context.mounted) {
-                                Navigator.pop(context);
-                              }
-                              if (response.statusCode == 200) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Appointment booked successfully',
-                                    ),
-                                  ),
-                                );
-                                context.pushNamed(AppRouter.kHomeScreen);
-                              }
-                            } on DioException catch (e) {
-                              if (context.mounted) {
-                                Navigator.pop(context);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      e.response?.data['message'] ??
-                                          e.message ??
-                                          'Booking failed',
-                                    ),
-                                    backgroundColor: Colors.red,
-                                  ),
-                                );
-                              }
-                            }
                           },
                         ),
                       ],

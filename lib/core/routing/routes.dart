@@ -2,6 +2,7 @@
 import 'package:doctor_appointment/core/widgets/search_widget.dart';
 import 'package:doctor_appointment/features/alldoctors/presentation/all_doctors_screen.dart';
 import 'package:doctor_appointment/features/auth/presentation/login_screen.dart';
+import 'package:doctor_appointment/features/auth/presentation/register_screen.dart';
 import 'package:doctor_appointment/features/doctor_details/presentation/doctor_details.dart';
 import 'package:doctor_appointment/features/home/presentation/home_screen.dart';
 import 'package:doctor_appointment/features/user_edit_profile/data/user_profile_model.dart';
@@ -23,8 +24,10 @@ abstract class AppRouter {
 
 
   static final router = GoRouter(
-    initialLocation: kHomeScreen,
-    routes: [
+    initialLocation: kLoginScreen,
+    routes: [GoRoute(path: kSignUpScreen,
+    name : kSignUpScreen,
+    builder: (context, state)=> RegisterScreen()),
       
       GoRoute(path: kSearchScreen,
       name: kSearchScreen ,

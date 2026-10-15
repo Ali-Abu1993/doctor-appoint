@@ -1,5 +1,5 @@
 class StoreAppointmentStates {}
-class StoreIntialState extends StoreAppointmentStates{}
+class StoreInitialState extends StoreAppointmentStates{}
 class StoreLoadingState extends StoreAppointmentStates{}
 class StoreSuccessState extends StoreAppointmentStates{}
 class StoreErrorState extends StoreAppointmentStates{

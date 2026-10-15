@@ -49,10 +49,14 @@ int selectedIndex =0;
               onTap: () {},
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Icon(Icons.notifications_none),
+                child: Icon(Icons.notifications_none, color: ColorsManager.primary,),
               ),
             ),
           ],
+          leading: IconButton(onPressed: (){
+            context.pop();
+          }, icon: Icon(Icons.arrow_back,
+          color: ColorsManager.primary,)),
         ),
         body: SingleChildScrollView(
           child: Column(
