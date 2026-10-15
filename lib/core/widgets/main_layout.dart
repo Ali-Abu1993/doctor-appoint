@@ -21,7 +21,8 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return
        BottomNavigationBar(
-        selectedItemColor: ColorsManager.primary,
+        selectedItemColor: ColorsManager.secondary,
+        backgroundColor: Color.fromRGBO(231, 238, 255, 1),
 
         unselectedItemColor: ColorsManager.unselectedIcon,
         unselectedLabelStyle: TxtStyle.font12W500,

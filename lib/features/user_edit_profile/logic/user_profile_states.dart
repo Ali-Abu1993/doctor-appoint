@@ -14,10 +14,25 @@ class ProfileErrorState extends UserProfileStates{
 }
 class UpdateProfileLoadingState extends UserProfileStates{}
 class UpdateProfileSuccessState extends UserProfileStates{
-  final UserProfileModel user;
+  final UserProfileModel? user;
   UpdateProfileSuccessState(this.user);
 }
 class UpdateProfileErrorState extends UserProfileStates{
   final String message;
   UpdateProfileErrorState(this.message);
+}
+class EditPhotoLoadingState extends UserProfileStates{}
+class EditPhotoSuccessState extends UserProfileStates{
+  final String photoUrl;
+  EditPhotoSuccessState(this.photoUrl);
+}
+class EditPhotoErrorState extends UserProfileStates{
+  final String message;
+  EditPhotoErrorState(this.message);
+}
+class UpdateGenderLoading extends UserProfileStates{}
+class UpdateGenderSuccess extends UserProfileStates{}
+class UpdateGenderFailure extends UserProfileStates{
+  final String message;
+  UpdateGenderFailure(this.message);
 }

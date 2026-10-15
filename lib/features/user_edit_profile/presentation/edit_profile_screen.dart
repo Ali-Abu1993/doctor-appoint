@@ -4,6 +4,7 @@ import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/core/widgets/app_button.dart';
 import 'package:doctor_appointment/core/widgets/app_text_field.dart';
 import 'package:doctor_appointment/features/user_edit_profile/data/user_profile_model.dart';
+import 'package:doctor_appointment/features/user_edit_profile/logic/profile_cubit.dart';
 import 'package:doctor_appointment/features/user_edit_profile/logic/user_profile_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController emailController;
   late TextEditingController phoneController;
   String selectedGender = 'Male';
+  String? photoUrl;
 
   @override
   void initState() {
@@ -101,119 +103,191 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             }
           },
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                CircleAvatar(
-                  radius: 35,
-                  child: Image.asset(
-                    "assets/images_and_icons/female_doc_img.jpg",
-                  ),
-                ),
-                SizedBox(height: 10),
-                Center(
-                  child: Text(
-                    widget.editProfile?.fullName ?? '',
-                    style: TxtStyle.font24W600Black,
-                  ),
-                ),
-                Text("Member since 2021", style: TxtStyle.font16W400Regular),
-                SizedBox(height: 20),
-                Container(
-                  width: 350.w,
-                  height: 293.h,
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.03),
-                        blurRadius: 10,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      CustomTextField(
-                        controller: nameController,
-                        hintText: "Full Name",
-                        textInput: (val) {
-                          return null;
-                        },
-                        prefixIcon: null,
-                      ),
-                      Divider(height: 24),
-                      CustomTextField(
-                        textInput: (val) {
-                          return null;
-                        },
-                        controller: emailController,
-                        hintText: "Email Address",
-                      ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  BlocConsumer<ProfileCubit, UserProfileStates>(
+  listener: (context, state) {
+    if ( state is EditPhotoLoadingState){
+      showDialog(context: context,
+          barrierDismissible: false,
+          builder: (builder)=> Center(child: const CircularProgressIndicator()));
+    }
+    if (state is EditPhotoSuccessState){
+      SnackBar(
+        content: Row(
+          children: [
+            Icon(Icons.check_circle, color: Colors.white),
+            SizedBox(width: 10),
+            Text(
+              "Image updated successfully",
+              style: TxtStyle.font12W500,
+            ),
+          ],
+        ),
+        backgroundColor: ColorsManager.primary,
+        duration: Duration(seconds: 2),
+      );
 
-                      Divider(height: 24),
-                      CustomTextField(
-                        textInput: (val) {
-                          return null;
-                        },
-                        controller: phoneController,
-                        hintText: "Phone Number",
-                      ),
-                      Divider(height: 24),
-
-                      Row(
-                        children: [
-                          Text("Gender", style: TxtStyle.font12W500),
-                          Radio(
-                            value: "Male",
-                            groupValue: selectedGender,
-                            onChanged: (value) {
-                              setState(() {
-                                selectedGender = value!;
-                              });
-                            },
+    context.pop();
+    }
+    if (state is EditPhotoErrorState){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(state.message),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  },
+  builder: (context, state) {
+    return InkWell(
+      onTap: (){
+        pickAndUploadImage(context);
+      },
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white,width: 4)
                           ),
-                          Text("Male", style: TxtStyle.font12W500),
-                          Radio(
-                            value: "Female",
-                            groupValue: selectedGender,
-                            onChanged: (value) {
-                              setState(() {
-                                selectedGender = value!;
-                              });
-                            },
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundColor: Colors.grey.shade500,
+                            backgroundImage: photoUrl !=null? NetworkImage(photoUrl!):null,
+                            child: photoUrl==null? Icon(Icons.person,size: 60,color: Colors.grey,):
+                            null,
+                    
                           ),
-                          Text("Female", style: TxtStyle.font12W500),
-                        ],
-                      ),
-
-                      SizedBox(height: 30),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20),
-                BlocBuilder<MockProfileCubit, UserProfileStates>(
-                  builder: (context, state) => AppButton(
-                    barWidth: 300.w,
-                    txt: state is UpdateProfileLoadingState
-                        ? "Updating..."
-                        : "Update profile",
-                    onPress: () {
-                      context.read<MockProfileCubit>().updateUserData(
-                        data: UserProfileModel(
-                          fullName: nameController.text,
-                          email: emailController.text,
-                          phoneNumber: phoneController.text,
-                          gender: selectedGender,
                         ),
-                      );
-                    },
-                    icon: Icon(Icons.edit, color: Colors.white),
+                        Positioned(
+                          right: 5,
+                            bottom:5,
+                            child:Container(
+                              padding: EdgeInsets.all(4.0),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF1E56A0)
+                              ),
+                              child: Icon(Icons.edit, color: Colors.white,size: 16,),
+                            ) )
+                      ],
+                    ),
+                  );
+  },
+)
+                  ,
+                  SizedBox(height: 10),
+                  Center(
+                    child: Text(
+                      widget.editProfile?.fullName ?? '',
+                      style: TxtStyle.font24W600Black,
+                    ),
                   ),
-                ),
-                SizedBox(height: 30),
-              ],
+                  Text("Member since 2021", style: TxtStyle.font16W400Regular),
+                  SizedBox(height: 30),
+                  Container(
+                    width: 350.w,
+                    height: 293.h,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.03),
+                          blurRadius: 10,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        CustomTextField(
+                          controller: nameController,
+                          hintText: "Full Name",
+                          textInput: (val) {
+                            return null;
+                          },
+                          prefixIcon: null,
+                        ),
+                        Divider(height: 24),
+                        CustomTextField(
+                          textInput: (val) {
+                            return null;
+                          },
+                          controller: emailController,
+                          hintText: "Email Address",
+                        ),
+
+                        Divider(height: 24),
+                        CustomTextField(
+                          textInput: (val) {
+                            return null;
+                          },
+                          controller: phoneController,
+                          hintText: "Phone Number",
+                        ),
+                        Divider(height: 24),
+
+                        Row(
+                          children: [
+                            Text("Gender", style: TxtStyle.font12W500),
+                            Radio(
+                              value: "Male",
+                              groupValue: selectedGender,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedGender = value!;
+                                });
+                              },
+                            ),
+                            Text("Male", style: TxtStyle.font12W500),
+                            Radio(
+                              value: "Female",
+                              groupValue: selectedGender,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedGender = value!;
+                                });
+                              },
+                            ),
+                            Text("Female", style: TxtStyle.font12W500),
+                          ],
+                        ),
+
+                        SizedBox(height: 30),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  BlocBuilder<MockProfileCubit, UserProfileStates>(
+                    builder: (context, state) => AppButton(
+                      barWidth: 300.w,
+                      txt: state is UpdateProfileLoadingState
+                          ? "Updating..."
+                          : "Update profile",
+                      onPress: () {
+                        context.read<MockProfileCubit>().updateUserData(
+                          data: UserProfileModel(
+                            fullName: nameController.text,
+                            email: emailController.text,
+                            phoneNumber: phoneController.text,
+                            gender: selectedGender,
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.edit, color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                ],
+              ),
             ),
           ),
         ),

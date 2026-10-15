@@ -1,5 +1,6 @@
 import 'package:doctor_appointment/core/utils/colors_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
@@ -40,12 +41,12 @@ class CustomTextField extends StatelessWidget {
       obscureText: isPassword,
 
       decoration: InputDecoration(
-        constraints: BoxConstraints(minHeight: 48, maxWidth: 350),
+        constraints: BoxConstraints(minHeight: 48.h, maxWidth: 350.w),
         hintText: hintText,
         fillColor: mainColor,
         hintStyle: TextStyle(
           fontWeight: FontWeight.normal,
-          fontSize: 14,
+          fontSize: 14.sp,
           color: Colors.grey,
           fontFamily: "Inter",
         ),
@@ -66,7 +67,7 @@ class CustomTextField extends StatelessWidget {
           borderSide: BorderSide(color: ColorsManager.primary)
         ),
 
-        contentPadding: const EdgeInsetsGeometry.only(left: 10),
+        contentPadding: const EdgeInsetsGeometry.only(left: 5),
       ),
     );
 

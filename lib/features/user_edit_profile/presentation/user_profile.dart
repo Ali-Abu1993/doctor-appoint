@@ -1,4 +1,5 @@
 import 'package:doctor_appointment/core/helper/cache_helper.dart';
+import 'package:doctor_appointment/core/helper/dio_helper.dart';
 import 'package:doctor_appointment/core/mock_data/logic/mock_profile_cubit.dart';
 import 'package:doctor_appointment/core/routing/navigation_cubit.dart';
 import 'package:doctor_appointment/core/routing/routes.dart';
@@ -8,6 +9,8 @@ import 'package:doctor_appointment/core/widgets/app_button.dart';
 import 'package:doctor_appointment/core/widgets/build_info_tile.dart';
 import 'package:doctor_appointment/core/widgets/main_layout.dart';
 import 'package:doctor_appointment/features/user_edit_profile/data/user_profile_model.dart';
+import 'package:doctor_appointment/features/user_edit_profile/logic/profile_cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,6 +33,7 @@ class UserProfile extends StatelessWidget {
     BlocProvider(
       create: (context) => NavigationCubit(),
     ),
+    BlocProvider(create: (_)=> ProfileCubit(DioHelper()))
   ],
   child: Scaffold(
         appBar: AppBar(backgroundColor: Colors.white,
@@ -57,22 +61,31 @@ class UserProfile extends StatelessWidget {
             }
             if (state is ProfileSuccessState) {
               final UserProfileModel user = state.user;
+              final userName = FirebaseAuth.instance.currentUser;
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: AssetImage('assets/images_and_icons/female_doc_img.jpg'),
-
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white,width: 4)
+                        ),
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage:NetworkImage(userName?.photoURL ??
+                          'assets/images_and_icons/stock-vector-a-faceless-male-doctor-avatar-with-a-stethoscope-in-a-flat-design-ideal-for-healthcare-medical-2644008685.jpg'
+                          )
+                                          ),
                       ),
                       SizedBox(height: 10),
                       Center(
-                        child: Text(user.fullName, style: TxtStyle.font24W600Black),
+                        child: Text(userName?.displayName ?? 'User', style: TxtStyle.font24W600Black),
                       ),
-                      Text("Member since 2021", style: TxtStyle.font16W400Regular),
+                      Text('Member since ${userName?.metadata.creationTime?.year}',
+                          style: TxtStyle.font16W400Regular),
                       SizedBox(height: 30),
                       Container(
                         width: 350.w,
@@ -89,17 +102,23 @@ class UserProfile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        child: Column(
-                            children: [
-                          buildInfoTile(Icons.person_2_outlined, "Full Name", user.fullName),
-                              Divider(height: 24,),
-                              buildInfoTile(Icons.email_outlined, "Email Address", user.email),
-                              Divider(height: 24,),
-                              buildInfoTile(Icons.phone, "Phone Number", user.phoneNumber),
-                              Divider(height: 24,),
-                              buildInfoTile(Icons.transgender_outlined, "Gender", user.gender),
+                        child: BlocBuilder<ProfileCubit, UserProfileStates>(
+  builder: (context, state) {
+    String gender = state is ProfileSuccessState? state.user.gender : "Not Specified";
+    return Column(
 
-                        ]),
+                            children: [
+                          buildInfoTile(Icons.person_2_outlined, "Full Name", userName?.displayName ?? 'User'),
+                              Divider(height: 24,),
+                              buildInfoTile(Icons.email_outlined, "Email Address", userName?.email ?? 'noemail@nodomain.com'),
+                              Divider(height: 24,),
+                              buildInfoTile(Icons.phone, "Phone Number", userName?.phoneNumber ?? ''),
+                              Divider(height: 24,),
+                              buildInfoTile(Icons.transgender_outlined, "Gender", gender ),
+
+                        ]);
+  },
+),
                       ),
                       SizedBox(height: 20,),
                       AppButton(
