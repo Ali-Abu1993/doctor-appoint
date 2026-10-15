@@ -27,6 +27,8 @@ class DoctorModel {
       experience: json['experience'] ?? '',
     );
   }
+
+
 }
 
 class Specialization {

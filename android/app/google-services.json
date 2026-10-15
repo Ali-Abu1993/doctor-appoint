@@ -12,7 +12,20 @@
           "package_name": "com.example.doctor_appointment"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "966861821964-jeq13u5iado35h2c35mmn7eqac7023hq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.doctor_appointment",
+            "certificate_hash": "44513fac545554925a374b8bf7563becda12b3c6"
+          }
+        },
+        {
+          "client_id": "966861821964-6d5r232bl8j6rpttose5cpisvldulhcn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDimpsgmouTcqLq7jbe9BQrrA_B8VtL--U"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "966861821964-6d5r232bl8j6rpttose5cpisvldulhcn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "966861821964-96mfn5tqm0hl3t8ciq8grtfe3kbuo5tk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.doctorAppointment"
+              }
+            }
+          ]
         }
       }
     }

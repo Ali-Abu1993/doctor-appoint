@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: 'Doctor Appointment',
               theme: ThemeData(
-                scaffoldBackgroundColor: Color.fromRGBO(249, 249, 255, 0.9),
+                scaffoldBackgroundColor: Color.fromRGBO(231, 238, 255, 1),
 
                 colorScheme: .fromSeed(seedColor: Colors.deepPurple),
               ),

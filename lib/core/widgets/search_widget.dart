@@ -20,30 +20,34 @@ class SearchWidgetState extends State<SearchWidget> {
     return BlocProvider(
       create: (context) => MockAllDoctorsCubit(),
       child: Scaffold(
-        appBar: AppBar(title: Text("Search", style: TxtStyle.font12W500)),
-        body: Column(
-          children: [
-            CustomTextField(
-              hintText: 'Search doctors, specialties, clinics...',
-              controller: searchController,
-              textInput: (value) {
-                return;
-              },
-              query: (value) {
-                debounce.call(() {
-                  if (value.isNotEmpty) {
-                    context.read<MockAllDoctorsCubit>().getSearchDoctors(
-                      doctorName: value,
-                    );
-                  } else {
-                    context.read<MockAllDoctorsCubit>().getAllDoctors();
-                  }
-                });
-              },
-              prefixIcon: Icons.search,
-              suffixIcon: Icon(Icons.delete_outline),
-            ),
-          ],
+        appBar: AppBar(title: Center(child: Text("Search Doctor", style: TxtStyle.font16W400Regular))),
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomTextField(
+                hintText: 'Search doctors, specialties, clinics...',
+                controller: searchController,
+                textInput: (value) {
+                  return;
+                },
+                query: (value) {
+                  debounce.call(() {
+                    if (value.isNotEmpty) {
+                      context.read<MockAllDoctorsCubit>().getSearchDoctors(
+                        doctorName: value,
+                      );
+                    } else {
+                      context.read<MockAllDoctorsCubit>().getAllDoctors();
+                    }
+                  });
+                },
+                prefixIcon: Icons.search,
+                suffixIcon: Icon(Icons.delete, color: Colors.grey,),
+              ),
+            ],
+          ),
         ),
       ),
     );

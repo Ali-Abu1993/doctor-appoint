@@ -34,8 +34,9 @@ class AppButton extends StatelessWidget {
           )
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           spacing: 5,
-          children: [Text(txt,style: buttonTxtStyle),icon??Text("")],
+          children: [icon??Text(""),Text(txt,style: buttonTxtStyle)],
         ),
       ),
     );

@@ -48,23 +48,36 @@ class AuthCubit extends Cubit<AuthStates>{
   final FirebaseAuth auth =FirebaseAuth.instance;
   final GoogleSignIn googleSignIn =GoogleSignIn.instance;
   Future<UserCredential?> signInWithGoogle() async{
+    
+    
 
     emit(AuthLoadingState());
     try {
+      await googleSignIn.initialize(
+      clientId: "966861821964-jeq13u5iado35h2c35mmn7eqac7023hq.apps.googleusercontent.com"
+    );
+   await googleSignIn.signOut();
+   // trigger google sign in screen
       final GoogleSignInAccount googleUser = await googleSignIn.authenticate();
       
-        final String? idToken =
-          googleUser.authentication.idToken;
-
-       final authorization = await googleUser.authorizationClient.authorizeScopes([
-        'email','profile'
+// fetch authentication credentials       
+        final GoogleSignInAuthentication googleAuth =
+          googleUser.authentication;
+      // create firebase auth credential
+      final result =await googleUser.authorizationClient.authorizeScopes([
+        'email', 'profile'
        ]);
-       final String? accessToken = authorization.accessToken;
-       final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: accessToken,
-        idToken: idToken,
+
+       final AuthCredential authCredential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+        accessToken: result.accessToken,
        );
-       return await auth.signInWithCredential(credential);
+       // authenticate with firebase
+       UserCredential userCredential =await auth.signInWithCredential(authCredential);
+       emit(AuthSuccessState());
+       return userCredential;
+       
+
        } on FirebaseAuthException catch (e){
         emit(AuthErrorState(em: e.message?? "Something went wrong"));
         return null;

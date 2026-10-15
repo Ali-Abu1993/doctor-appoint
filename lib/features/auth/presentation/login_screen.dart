@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -49,14 +50,27 @@ class _LoginScreenState extends State<LoginScreen> {
   create: (context) => AuthCubit(),
   child: BlocConsumer<AuthCubit, AuthStates>(
   listener: (context, state) {
+    if (state is AuthSuccessState){
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("You signed up successfully"),
+        content: Text("You signed in successfully"),
         backgroundColor: ColorsManager.primary,
         behavior: SnackBarBehavior.floating,
       ),
 
     );
+    context.goNamed(AppRouter.kHomeScreen);
+    }
+    if(state is AuthErrorState){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(state.em),
+          backgroundColor: Colors.redAccent,
+          behavior: SnackBarBehavior.floating,
+        ),
+
+      );
+    }
   },
   builder: (context, state) {
     return Scaffold(
@@ -202,12 +216,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 40),
                   Padding(
                     padding: const EdgeInsets.only(right: 15),
-                    child: AppButton(barWidth: double.infinity, txt:(state is AuthLoadingState)? "Loading..." :"Sign in",
-                        onPress: (){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AllDoctorsScreen()));
-                      context.read<AuthCubit>().login(LoginRequestBody(
-                          email: emailController.text.trim(), password: passController.text.trim()));
-                        }),
+                    child: AppButton(barWidth: double.infinity, txt:(state is AuthLoadingState)?
+                       "Loading..." :"Sign in",
+                          onPress: (){
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AllDoctorsScreen()));
+                        context.read<AuthCubit>().login(LoginRequestBody(
+                            email: emailController.text.trim(), password: passController.text.trim()));
+                          },
+                    ),
                   ),
                   SizedBox(height: 50,),
                   Row(
@@ -232,24 +248,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ButtonWidget("assets/images_and_icons/google_logo.png",
-                      onTap: () async{
-                        try{
-                          final UserCredential? userCredential =
-                          await  context.read<AuthCubit>().signInWithGoogle();
-                          if(userCredential != null){
-                            print("---------------------- google signin success");
-                            print(userCredential);
-                            print("Logged in as: ${userCredential.user?.displayName}");
-                            context.goNamed(AppRouter.kAllDoctorScreen);
-                          }
+                      onTap: () {
+                        // try{
+                        //   final UserCredential? userCredential =
+                            context.read<AuthCubit>().signInWithGoogle();
+                          // if (!context.mounted) return;
+                          // if(userCredential != null){
+                          //   print("---------------------- google signin success");
+                          //   print(userCredential);
+                          //   print("Logged in as: ${userCredential.user?.displayName}");
 
-                        }catch(ex){
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(ex.toString())));
-                        }
+                          },
+
+                        // }catch(ex){
+                        //   if (!context.mounted) return;
+                        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        //       content: Text(ex.toString())));
+                        // }
                         
-                      },
-                          containerWidth: 150, containerHeight: 48, borderColor: Colors.blueGrey,
+                    //  },
+                          containerWidth: 150.w, containerHeight: 48.h, borderColor: Colors.blueGrey,
                           textColor: Colors.black, body: "Google", fontWeight: FontWeight.w600)
                           ,
                       SizedBox(width: 20,),

@@ -4,7 +4,7 @@ class DoctorsStates {}
 class DoctorsInitialState extends DoctorsStates{}
 class DoctorsLoadingState extends DoctorsStates{}
 class DoctorsSuccessState extends DoctorsStates{
-final DoctorModel doctors;
+final List<DoctorModel> doctors;
 DoctorsSuccessState(this.doctors);
 }
 class DoctorsErrorState extends DoctorsStates{

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:doctor_appointment/core/constance/api_const.dart';
 import 'package:doctor_appointment/features/auth/data/auth_response.dart';
@@ -59,8 +61,13 @@ class DioHelper {
       }
     ));
   }
-  Future<DoctorModel> getHomeData() async{
+  Future<List<DoctorModel>> getHomeData() async{
     final response= await dio.get(ApiConst.homeURL);
-    return DoctorModel.fromJson(response.data);
+
+    List<DoctorModel> doctorsList= (response.data as List).
+    map((json)=> DoctorModel.fromJson(json)).toList();
+    return doctorsList;
+
+
   }
 }

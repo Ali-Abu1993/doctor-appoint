@@ -57,13 +57,13 @@ class DoctorCard extends StatelessWidget {
                 children: [
                   // صورة الطبيب المستديرة
                   CircleAvatar(
-                    radius: 35.r,
+                    radius: 40.r,
+                    backgroundImage: AssetImage(photo),
                     child: ClipRRect(
                       borderRadius: BorderRadiusGeometry.circular(50),
                       child:Transform.scale(
-                        scale: 1.65,
-                          child: Image.asset(photo,fit:BoxFit.cover,alignment: Alignment.center,
-                      )
+                        scale: 1,
+
 
                                 ),
                     ),

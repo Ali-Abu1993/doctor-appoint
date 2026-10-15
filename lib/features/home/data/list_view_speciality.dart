@@ -7,9 +7,9 @@ class ListViewSpeciality extends StatelessWidget {
   final List<SpecialtyModel> specialities = [
     SpecialtyModel(
       title: 'Cardiology',
-      icon: Icon(Icons.favorite,color: Colors.green,),
-      backgroundColor: Colors.greenAccent.shade200,
-      iconBackgroundColor: Colors.lightGreen.shade500,
+      icon: Icon(Icons.favorite,color: Color.fromRGBO(0, 110, 109, 1),),
+      backgroundColor: Color.fromRGBO(121, 242, 240, 0.2),
+      iconBackgroundColor: Color.fromRGBO(121, 242, 240, 1),
     ),
     SpecialtyModel(
       title: 'Dental',
@@ -37,31 +37,33 @@ class ListViewSpeciality extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 120,
-      child: ListView.builder(scrollDirection: Axis.horizontal,
+      height: 100,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
           itemCount: specialities.length,
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           itemBuilder: (context,index){
         final item =specialities[index];
         return Padding(
-          padding: const EdgeInsets.only(right: 16),
+          padding: const EdgeInsets.only(right: 10),
           child: Container(
-            width: 100.w,
-            height: 100.h,
+            width: 85.w,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: item.backgroundColor
 
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircleAvatar(
-                  radius: 48.r,
+                  radius: 26.r,
                   backgroundColor: item.iconBackgroundColor,
                   child: item.icon,
                 ),
                 SizedBox(height: 10,),
-                Text(item.title,style: TxtStyle.font16Medium,)
+                Text(item.title,style: TxtStyle.font12W500,maxLines: 1,
+                overflow: TextOverflow.ellipsis,)
 
               ],
             ),

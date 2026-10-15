@@ -23,12 +23,14 @@ abstract class AppRouter {
 
 
   static final router = GoRouter(
-    initialLocation: kLoginScreen,
+    initialLocation: kHomeScreen,
     routes: [
       
       GoRoute(path: kSearchScreen,
+      name: kSearchScreen ,
       builder: (context, state)=>SearchWidget()),
       GoRoute(path: editProfileScreen,
+      name: editProfileScreen,
       builder: (context, state){
        final editProfile = state.extra as UserProfileModel?;
        return EditProfileScreen(editProfile: editProfile,);
@@ -39,19 +41,23 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kLoginScreen,
+        name: kLoginScreen,
         builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
         path: kProfileScreen,
+        name: kProfileScreen,
         builder: (context, state) => const UserProfile(),
       ),
       GoRoute(
         path: kAllDoctorScreen,
+        name: kAllDoctorScreen,
 
         builder: (_, state) => const AllDoctorsScreen(),
       ),
       GoRoute(
         path: kDoctorDetailScreen,
+        name: kDoctorDetailScreen,
 
         builder: (_,state) {
           final extraData = state.extra as Map<String,dynamic>;
