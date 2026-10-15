@@ -3,6 +3,7 @@ import 'package:doctor_appointment/core/mock_data/logic/mock_all_doctors_cubit.d
 import 'package:doctor_appointment/core/utils/colors_manager.dart';
 import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/core/widgets/app_text_field.dart';
+import 'package:doctor_appointment/core/widgets/main_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,9 +63,9 @@ class SearchWidgetState extends State<SearchWidget> {
             //   ],
             // ),
             body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.transparent,
@@ -121,6 +122,7 @@ class SearchWidgetState extends State<SearchWidget> {
                 ],
               ),
             ),
+            bottomNavigationBar: MainLayout(),
           ),
         ),
       ),

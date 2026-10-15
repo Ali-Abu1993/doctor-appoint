@@ -1,3 +1,4 @@
+import 'package:doctor_appointment/core/helper/dio_helper.dart';
 import 'package:doctor_appointment/core/mock_data/logic/mock_profile_cubit.dart';
 import 'package:doctor_appointment/core/utils/colors_manager.dart';
 import 'package:doctor_appointment/core/utils/text_style.dart';
@@ -47,9 +48,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return MultiBlocProvider(
+  providers: [
+    BlocProvider(
       create: (context) => MockProfileCubit(),
-      child: Scaffold(
+),
+    BlocProvider(
+      create: (context) => ProfileCubit(DioHelper()),
+    ),
+  ],
+  child: Scaffold(
         appBar: AppBar(
           title: Text("Edit profile", style: TxtStyle.font14W700),
           centerTitle: true,
@@ -189,7 +197,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       style: TxtStyle.font24W600Black,
                     ),
                   ),
-                  Text("Member since 2021", style: TxtStyle.font16W400Regular),
                   SizedBox(height: 30),
                   Container(
                     width: 350.w,
@@ -261,7 +268,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ],
                         ),
 
-                        SizedBox(height: 30),
                       ],
                     ),
                   ),
@@ -292,6 +298,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
         ),
       ),
-    );
+);
   }
 }
