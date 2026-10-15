@@ -5,6 +5,7 @@ import 'package:doctor_appointment/core/routing/routes.dart';
 import 'package:doctor_appointment/core/utils/colors_manager.dart';
 import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/core/widgets/app_text_field.dart';
+import 'package:doctor_appointment/core/widgets/main_layout.dart';
 import 'package:doctor_appointment/features/alldoctors/logic/all_doctor_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,8 +40,9 @@ int selectedIndex =0;
         appBar: AppBar(
           title: Text(
             "Find a Doctor",
-            style:TxtStyle.font26W700Black
+            style:TxtStyle.font20W700Blue
           ),
+          centerTitle: true,
           backgroundColor: Colors.white,
           actions: [
             InkWell(
@@ -196,46 +198,7 @@ int selectedIndex =0;
           ),
         ),
 
-          bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor: ColorsManager.secondary,
-              unselectedItemColor: ColorsManager.unselectedIcon,
-              unselectedLabelStyle: TxtStyle.font12W500,
-              currentIndex: selectedIndex,
-              onTap: (val){
-              setState(() {
-                selectedIndex=val;
-              });
-              if(val==0){
-                context.pushNamed(AppRouter.kHomeScreen);
-              }
-              if(val==1){
-                context.pushNamed(AppRouter.kAllDoctorScreen);
-              }
-              if(val==2){
-                
-              }
-              if(val==3){
-                context.pushNamed(AppRouter.kProfileScreen);
-              }
-              },
-              type: BottomNavigationBarType.fixed,
-              items: [
-            BottomNavigationBarItem(icon: InkWell(
-              onTap:()=> context.pushNamed(AppRouter.kHomeScreen) ,  
-              child: Icon(Icons.home_outlined)),label: "Home",),
-            BottomNavigationBarItem(icon: InkWell(
-              onTap:()=> context.pushNamed(AppRouter.kSearchScreen),  
-              child: Icon(Icons.search)),label: "Search",
-            backgroundColor:ColorsManager.unselectedIcon ),
-            BottomNavigationBarItem(icon: Icon(Icons.calendar_today_outlined),label: "Booking"),
-            BottomNavigationBarItem(
-                icon: InkWell(
-                  onTap: (){
-                    context.pushNamed(AppRouter.kProfileScreen);
-                  },
-                    child: Icon(Icons.person)),label: "profile"),
-          ]
-          )
+          bottomNavigationBar: MainLayout()
       ),
     );
   }

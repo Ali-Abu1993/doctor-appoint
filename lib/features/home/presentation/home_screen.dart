@@ -196,40 +196,7 @@ String getGreeting(){
         bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
           builder: (context, state) {
             final currentIndex1 = context.watch<NavigationCubit>().currentIndex;
-            return BottomNavigationBar(
-              selectedItemColor: ColorsManager.primary,
-
-              unselectedItemColor: ColorsManager.unselectedIcon,
-              unselectedLabelStyle: TxtStyle.font12W500,
-              currentIndex: currentIndex1,
-              onTap: (val) {
-                if (val == 1) {
-                  context.pushNamed(AppRouter.kSearchScreen);
-                } else if (val == 3) {
-                  context.pushNamed(AppRouter.kProfileScreen);
-                }
-              },
-              type: BottomNavigationBarType.fixed,
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined),
-                  label: "Home",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.search),
-                  label: "Search",
-                  backgroundColor: ColorsManager.unselectedIcon,
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.calendar_today_outlined),
-                  label: "Booking",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: "profile",
-                ),
-              ],
-            );
+            return MainLayout();
           },
         ),
       ),

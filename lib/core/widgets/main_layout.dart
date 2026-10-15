@@ -12,7 +12,7 @@ class MainLayout extends StatelessWidget {
  final location =GoRouterState.of(context).uri.path;
  if (location.startsWith('/home'))return 0;
  if (location.startsWith('/search'))return 1;
- if (location.startsWith('/booking'))return 2;
+ if (location.startsWith('/all_doctors'))return 2;
  if (location.startsWith('/profile'))return 3;
  return 0;
   }
@@ -31,8 +31,10 @@ class MainLayout extends StatelessWidget {
             context.pushNamed(AppRouter.kHomeScreen);
           } else if (val ==1){
             context.pushNamed(AppRouter.kSearchScreen);
+          }else if (val ==2){
+            context.pushNamed(AppRouter.kAllDoctorScreen);
           }
-          else if (val == 4) {
+          else if (val == 3) {
             context.pushNamed(AppRouter.kProfileScreen);
           }
         },
