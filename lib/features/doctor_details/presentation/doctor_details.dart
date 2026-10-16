@@ -70,9 +70,16 @@ class DoctorDetails extends StatelessWidget {
         ),
       ),
 
-      body: BlocProvider(
+      body: MultiBlocProvider(
+  providers: [
+    BlocProvider(
         create: (context) => MockAllDoctorsCubit()..getAllDoctors(),
-        child: CustomScrollView(
+),
+    BlocProvider(
+      create: (context) => StoreAppointmentCubit(),
+    ),
+  ],
+  child: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
               child: Column(
@@ -109,7 +116,7 @@ class DoctorDetails extends StatelessWidget {
                                     ),
                                     child: Transform.scale(
                                       scale: 1.65,
-                                      child: Image.asset(
+                                      child: Image.network(
                                         docImage,
                                         fit: BoxFit.contain,
                                         alignment: Alignment.center,
@@ -159,7 +166,7 @@ class DoctorDetails extends StatelessWidget {
                                       height: 24,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
-                                          9999,
+                                          9,
                                         ),
                                         color: Color.fromRGBO(
                                           121,
@@ -180,7 +187,7 @@ class DoctorDetails extends StatelessWidget {
                                       height: 24,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
-                                          9999,
+                                          9,
                                         ),
                                         color: Color.fromRGBO(
                                           121,
@@ -325,6 +332,11 @@ class DoctorDetails extends StatelessWidget {
                                 barrierDismissible: false,
                                 // important for modal dialog
                               );
+                            } else if ( state is StoreSuccessState){
+                              ScaffoldMessenger.of(context).
+                              showSnackBar(SnackBar(content: Text('Booking is completed'),
+                                backgroundColor:Colors.green ,behavior: SnackBarBehavior.floating,));
+                              context.pop();
                             }
                             if (state is StoreErrorState) {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -338,7 +350,7 @@ class DoctorDetails extends StatelessWidget {
                             }
                           },
                           builder: (context, state) {
-                            bool isLoading = state is StoreLoadingState;
+                            bool isLoading = state is StoreLoadingState ;
                             return SafeArea(
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -380,7 +392,7 @@ class DoctorDetails extends StatelessWidget {
             ),
           ],
         ),
-      ),
+),
     );
   }
 }

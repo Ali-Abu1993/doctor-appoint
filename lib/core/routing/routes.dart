@@ -1,13 +1,16 @@
 
+import 'package:doctor_appointment/core/mock_data/data/all_doctors_mock_data.dart';
 import 'package:doctor_appointment/core/widgets/search_widget.dart';
 import 'package:doctor_appointment/features/alldoctors/presentation/all_doctors_screen.dart';
 import 'package:doctor_appointment/features/auth/presentation/login_screen.dart';
 import 'package:doctor_appointment/features/auth/presentation/register_screen.dart';
 import 'package:doctor_appointment/features/doctor_details/presentation/doctor_details.dart';
+import 'package:doctor_appointment/features/home/data/doctors_model.dart';
 import 'package:doctor_appointment/features/home/presentation/home_screen.dart';
 import 'package:doctor_appointment/features/user_edit_profile/data/user_profile_model.dart';
 import 'package:doctor_appointment/features/user_edit_profile/presentation/edit_profile_screen.dart';
 import 'package:doctor_appointment/features/user_edit_profile/presentation/user_profile.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 
@@ -62,19 +65,45 @@ abstract class AppRouter {
         path: kDoctorDetailScreen,
         name: kDoctorDetailScreen,
 
-        builder: (_,state) {
-          final extraData = state.extra as Map<String,dynamic>;
-           return DoctorDetails(docImage: extraData['docImage'],
-              docName: extraData['docName'],
-              docExperience: extraData['docExperience'],
-              doctorIndex: extraData['doctorIndex'],
-              docDescription: extraData['docDescription'],
-              docSpeciality: extraData['docSpeciality'],
-              docEmail: extraData['docEmail'],
-              docPhoneNumber: extraData['docPhoneNumber'],
-              startTime: extraData['startTime'],
-              endTime: extraData['endTime'],
-              doctorAddress: extraData['doctorAddress']);
+        builder: (context,state) {
+          final args = GoRouterState
+              .of(context)
+              .extra;
+          if (args != null) {
+            final extraData = state.extra as Map<String, dynamic>;
+            return DoctorDetails(
+                docImage: extraData['docImage'],
+                docName: extraData['docName'],
+                docExperience: extraData['docExperience'],
+                doctorIndex: extraData['doctorIndex'],
+                docDescription: extraData['docDescription'],
+                docSpeciality: extraData['docSpeciality'],
+                docEmail: extraData['docEmail'],
+                docPhoneNumber: extraData['docPhoneNumber'],
+                startTime: extraData['startTime'],
+                endTime: extraData['endTime'],
+                doctorAddress: extraData['doctorAddress']);
+          } else {
+            // 🌟 هنا البديل: لو مفيش data مبعوثة، هنجيب بيانات الدكتور من الـ Mock Data مباشرة!
+            // (بنفترض إن AllDoctorMockData.doctors دي هي اللستة بتاعتك، وبناخد أول دكتور كافتراضي [0])
+            final mockDoctor = AllDoctorsMockData.doctorsList[0];
+
+            // أخيراً بنرجع الـ Widget ونمرر لها البيانات سواء كانت حقيقية أو من الـ Mock
+            return DoctorDetails(
+              docName: mockDoctor.name!,
+              docEmail: mockDoctor.email!,
+              docPhoneNumber: mockDoctor.phone!,
+              docSpeciality: mockDoctor.specialization!.name!,
+              docImage: mockDoctor.photo!,
+              docExperience: mockDoctor.degree!,
+              startTime: mockDoctor.startTime!,
+              endTime: mockDoctor.endTime!,
+              doctorAddress: mockDoctor.address!,
+              docDescription: mockDoctor.description!,
+              docLanguage: '',
+              doctorIndex: mockDoctor.id!,
+            );
+          }
         })
     ],
   );

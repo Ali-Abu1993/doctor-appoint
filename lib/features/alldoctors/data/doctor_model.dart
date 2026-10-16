@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class DoctorsModel {
   String? message;
   List<Data>? data;
@@ -6,16 +8,19 @@ class DoctorsModel {
 
   DoctorsModel({this.message, this.data, this.status, this.code});
 
-  DoctorsModel.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
-    if (json['data'] != null) {
+  DoctorsModel.fromJson(Map<String, dynamic>? json) {
+    if(json==null){
+    DoctorsModel();
+    }
+    message = json?['message'];
+    if (json?['data'] != null) {
       data = <Data>[];
-      json['data'].forEach((v) {
+      json?['data'].forEach((v) {
         data!.add(Data.fromJson(v));
       });
     }
-    status = json['status'];
-    code = json['code'];
+    status = json?['status'];
+    code = json?['code'];
   }
 
   Map<String, dynamic> toJson() {

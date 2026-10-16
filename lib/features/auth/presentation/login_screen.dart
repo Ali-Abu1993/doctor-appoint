@@ -57,7 +57,6 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: ColorsManager.primary,
         behavior: SnackBarBehavior.floating,
       ),
-
     );
     context.goNamed(AppRouter.kHomeScreen);
     }
@@ -219,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: AppButton(barWidth: double.infinity, txt:(state is AuthLoadingState)?
                        "Loading..." :"Sign in",
                           onPress: (){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AllDoctorsScreen()));
+
                         context.read<AuthCubit>().login(LoginRequestBody(
                             email: emailController.text.trim(), password: passController.text.trim()));
                           },
