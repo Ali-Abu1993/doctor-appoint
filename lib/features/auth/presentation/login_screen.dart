@@ -3,11 +3,10 @@ import 'package:doctor_appointment/core/utils/colors_manager.dart';
 import 'package:doctor_appointment/core/widgets/app_button.dart';
 import 'package:doctor_appointment/core/widgets/app_text_field.dart';
 import 'package:doctor_appointment/core/widgets/buttons.dart';
-import 'package:doctor_appointment/features/alldoctors/presentation/all_doctors_screen.dart';
 import 'package:doctor_appointment/features/auth/data/login_body.dart';
 import 'package:doctor_appointment/features/auth/logic/cubit.dart';
 import 'package:doctor_appointment/features/auth/logic/state.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:doctor_appointment/l10n/app_localizations.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -83,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
-                    child: Text("Welcome Back",style: TextStyle(
+                    child: Text(AppLocalizations.of(context)!.welcome_back,style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 32,
                       color: Colors.black
@@ -91,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),),
                   ),
                   Center(
-                    child: Text("Sign in to securely access your\n medical records and upcoming\n appointments."
+                    child: Text(AppLocalizations.of(context)!.login_subtitle
                       , style: TextStyle(fontWeight: FontWeight.w400,
                       fontSize: 16 ,
                         color: Color.fromRGBO(66, 71, 82, 1)
@@ -104,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 20,),
 
                       Text(
-                        "Email Address",
+                        AppLocalizations.of(context)!.email_address,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
@@ -114,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                   SizedBox(height: 15,),
-                  CustomTextField(hintText: "patient@example.com",
+                  CustomTextField(hintText: AppLocalizations.of(context)!.email_hint,
                     controller: emailController,
                     prefixIcon: Icons.email_outlined,
                   keyboardType: TextInputType.emailAddress,
@@ -135,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       SizedBox(height: 20,),
                       Text(
-                        "Password",
+                        AppLocalizations.of(context)!.password,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
@@ -148,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               LinearGradient(colors: [ColorsManager.primary,ColorsManager.primary],
                                   begin: Alignment.centerLeft,end: Alignment.centerRight )
                                   .createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-                            child: Text("Forgot password?",style: TextStyle(
+                            child: Text(AppLocalizations.of(context)!.forgot_password,style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12
 
@@ -203,7 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           }),
                         ),
                         SizedBox(width: 10,),
-                        Text("Remember me for 30 days",style: TextStyle(
+                        Text(AppLocalizations.of(context)!.remember_me,style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 14,
                           color: Color.fromRGBO(66, 71, 82, 1)

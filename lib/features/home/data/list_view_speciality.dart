@@ -36,44 +36,52 @@ class ListViewSpeciality extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 100,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: specialities.length,
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          itemBuilder: (context,index){
-        final item =specialities[index];
-        return Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: Container(
-            width: 85.w,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: item.backgroundColor
+    return InkWell(
+      onTap: (){},
+      child: SizedBox(
+        height: 100,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: specialities.length,
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            itemBuilder: (context,index){
+          final item =specialities[index];
+          return InkWell(
+            onTap: (){
+              
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Container(
+                width: 85.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: item.backgroundColor
 
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 26.r,
-                  backgroundColor: item.iconBackgroundColor,
-                  child: item.icon,
                 ),
-                SizedBox(height: 10,),
-                Text(item.title,style: TxtStyle.font12W500,maxLines: 1,
-                overflow: TextOverflow.ellipsis,)
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 26.r,
+                      backgroundColor: item.iconBackgroundColor,
+                      child: item.icon,
+                    ),
+                    SizedBox(height: 10,),
+                    Text(item.title,style: TxtStyle.font12W500,maxLines: 1,
+                    overflow: TextOverflow.ellipsis,)
 
-              ],
+                  ],
+                ),
+              ),
+
             ),
-          ),
-
-        );
+          );
 
 
 
-          }),
+            }),
+      ),
     );
   }
 }

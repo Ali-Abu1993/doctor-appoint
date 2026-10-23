@@ -13,10 +13,33 @@ class CustomTextField extends StatelessWidget {
   final  VoidCallback? onPress;
   final FormFieldValidator textInput;
   final Color mainColor;
+  final TextStyle hintStyle;
+  final Color prefixColor;
+  final Color suffixColor;
+  final InputDecoration? decoration;
 
    const CustomTextField({
     super.key,
     required this.hintText,
+     this.decoration=const InputDecoration(
+       disabledBorder:  OutlineInputBorder(
+           borderSide:  BorderSide(color: ColorsManager.unselectedIcon)
+       ),
+       enabledBorder: OutlineInputBorder(
+           borderSide:  BorderSide(color: ColorsManager.primary)
+       ),
+       focusedBorder: OutlineInputBorder(
+           borderSide:  BorderSide(color: ColorsManager.primary)
+       ),
+     ),
+     this.hintStyle= const TextStyle(
+       fontWeight: FontWeight.normal,
+       fontSize: 14,
+       color: Colors.grey,
+       fontFamily: "Inter",
+     ),
+     this.prefixColor= Colors.grey,
+     this.suffixColor=Colors.grey,
     this.prefixIcon,
      this.query,
     required this.controller,
@@ -43,31 +66,30 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
         constraints: BoxConstraints(minHeight: 48.h, maxWidth: 350.w),
         hintText: hintText,
+
+
         fillColor: mainColor,
-        hintStyle: TextStyle(
-          fontWeight: FontWeight.normal,
-          fontSize: 14.sp,
-          color: Colors.grey,
-          fontFamily: "Inter",
-        ),
-        prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: Colors.grey): null,
+        hintStyle: hintStyle,
+        prefixIconColor: prefixColor,
+        suffixIconColor: suffixColor,
+        prefixIcon: prefixIcon != null ? Icon(prefixIcon): null,
         prefixIconConstraints:prefixIcon !=null ? BoxConstraints(maxWidth: 50,minWidth: 40):
         BoxConstraints(maxWidth: 10),
         suffixIcon: suffixIcon,
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: ColorsManager.unselectedIcon)
+
         ),
         enabledBorder: OutlineInputBorder(
          borderRadius: BorderRadius.circular(12),
-         borderSide: BorderSide(color: ColorsManager.primary)
+
        ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: ColorsManager.primary)
+
         ),
 
-        contentPadding: const EdgeInsetsGeometry.only(left: 5),
+        contentPadding: const EdgeInsetsGeometry.only(left: 10),
       ),
     );
 

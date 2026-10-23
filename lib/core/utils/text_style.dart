@@ -61,4 +61,36 @@ class TxtStyle {
       fontSize: 20.sp,
       fontWeight: FontWeight.w700
   );
+  static TextStyle font11BoldGrey = TextStyle(
+      fontSize: 11,
+      fontWeight: FontWeight.bold,
+      color: Colors.grey);
+  static TextStyle font15W600DarkBlue = TextStyle(
+      fontSize: 15,
+      fontWeight: FontWeight.w600,
+      color: Color(0xFF1E293B));
+  static TextStyle font14BoldGrey =  TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    color: Colors.grey,
+  );
+  static TextStyle font16BoldRed =  TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: Colors.redAccent,
+  );
+  static TextStyle font14BoldBlue =  TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    color: ColorsManager.primary,
+  );
+  static TextStyle font12NormalGrey =  TextStyle(fontSize: 12,
+      color: Colors.grey);
+  static TextStyle font15W600Black =  TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+    color: Colors.black87,
+  );
+
+
 }

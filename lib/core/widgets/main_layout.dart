@@ -22,7 +22,7 @@ class MainLayout extends StatelessWidget {
     return
        BottomNavigationBar(
         selectedItemColor: ColorsManager.secondary,
-        backgroundColor: Colors.blueAccent.shade100,
+        backgroundColor: ColorsManager.white,
 
         unselectedItemColor: ColorsManager.unselectedIcon,
         unselectedLabelStyle: TxtStyle.font12W500,

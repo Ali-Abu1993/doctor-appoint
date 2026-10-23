@@ -2,6 +2,7 @@ import 'package:doctor_appointment/core/helper/debounce.dart';
 import 'package:doctor_appointment/core/mock_data/data/all_doctors_mock_data.dart';
 import 'package:doctor_appointment/core/mock_data/logic/mock_all_doctors_cubit.dart';
 import 'package:doctor_appointment/core/mock_data/logic/mock_home_cubit.dart';
+import 'package:doctor_appointment/core/notifications/request_permision.dart';
 import 'package:doctor_appointment/core/routing/navigation_cubit.dart';
 import 'package:doctor_appointment/core/routing/routes.dart';
 import 'package:doctor_appointment/core/utils/colors_manager.dart';
@@ -9,20 +10,31 @@ import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/core/widgets/app_text_field.dart';
 import 'package:doctor_appointment/core/widgets/doctor_card.dart';
 import 'package:doctor_appointment/core/widgets/main_layout.dart';
+import 'package:doctor_appointment/features/auth/logic/cubit.dart';
+import 'package:doctor_appointment/features/auth/logic/state.dart';
 import 'package:doctor_appointment/features/home/data/list_view_speciality.dart';
 import 'package:doctor_appointment/features/home/logic/recomended_doctors_states.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../data/doctors_model.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
    HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final searchController = TextEditingController();
+
   final debounce = Debounce();
+
 String getGreeting(){
   final hour =DateTime.now().hour;
   if (hour<12 ){
@@ -33,7 +45,18 @@ String getGreeting(){
     return 'Good Evening!';
   }
 }
+@override
+  void initState() {
+    RequestPermission.requestPermission();
+    getToken();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message){
+      print('تم استلام إشعار والتطبيق يعمل حالياً!');
+      print('عنوان الإشعار: ${message.notification?.title}');
+      print('محتوى الإشعار: ${message.notification?.body}');
 
+    });
+    super.initState();
+}
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +77,8 @@ String getGreeting(){
           MockAllDoctorsCubit()
             ..getAllDoctors(),
         ),
-        BlocProvider(create: (_)=> NavigationCubit())
+        BlocProvider(create: (_)=> NavigationCubit()),
+        BlocProvider(create: (_)=> AuthCubit())
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -62,25 +86,86 @@ String getGreeting(){
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
               onPressed: () {
-                context.pushNamed(AppRouter.kProfileScreen);
+
               },
               icon:
-              CircleAvatar( radius: 15,
-                  backgroundImage: photoUrl != null && photoUrl.isNotEmpty?
-                  NetworkImage(photoUrl):null,
-                   backgroundColor: ColorsManager.primary),
+              BlocBuilder<AuthCubit, AuthStates>(
+  builder: (context, state) {
+    return PopupMenuButton(
+                offset: Offset(0, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadiusGeometry.circular(12)
+                ),
+                onSelected: (val){
+                  if(val==1){
+                  print('================= Account is clicked++++++++');
+                  }else if(val==2){}
+                  else if(val==3 ){
+                    context.read<AuthCubit>().signOut();
+                  }
+
+                },
+                itemBuilder: (BuildContext context) =>[
+                  PopupMenuItem(value: 1,
+                      onTap: (){
+                    context.pushNamed(AppRouter.kSettingsScreen);
+                      },
+                      child: Text('Settings')),
+                  PopupMenuItem(value: 2,
+                       onTap: ()=>context.pushNamed(AppRouter.kProfileScreen),
+                      child: Text('Profile')),
+                  PopupMenuItem(value: 3,
+                      child: Text('Logout'),
+                  onTap: (){context.read<AuthCubit>().signOut();}
+                    ,)
+
+                ],
+                child: CircleAvatar( radius: 15,
+                    backgroundImage: photoUrl != null && photoUrl.isNotEmpty?
+                    NetworkImage(photoUrl):null,
+                     backgroundColor: ColorsManager.primary),
+              );
+  },
+),
             ),
           ),
           title: Text("DocPoint", style: TxtStyle.font20W700Blue),
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: ColorsManager.primary
+          ),
           centerTitle: true,
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.notifications_none_outlined,
-                color: ColorsManager.primary,
-              ),
-            ),
+            PopupMenuButton(
+              icon: const Icon(Icons.notifications_none_outlined, color: ColorsManager.primary
+                ,size: 28,),
+                offset: const Offset(0, 50),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(12)),
+                onSelected: (value){
+                  if (value == 1) {
+                    print("تم الضغط على الإشعار الأول");
+                  } else if (value == 2) {
+                    print("تم الضغط على الإشعار الثاني");
+                  }
+                },
+                itemBuilder: (context)=>
+                [PopupMenuItem<int>(
+                  value: 1,
+                  child: Row(
+                    children: [
+                      Icon(Icons.circle, size: 10, color: Colors.blue), // علامة إشعار غير مقروء
+                      SizedBox(width: 8),
+                      Text("تم تأكيد موعد حجزك مع الدكتور")
+                    ],
+                  ),
+                ),
+                  PopupMenuItem(child: Row(
+                    children: [
+                      Icon(Icons.circle,size: 10, color: Colors.redAccent,),
+                      SizedBox(width: 8,),
+                      Expanded(child: Text("New promotions for medical plans",overflow: TextOverflow.visible,))
+                    ],
+                  ))
+                ])
           ],
         ),
         body: SafeArea(
@@ -144,7 +229,9 @@ String getGreeting(){
                       children: [
                         Text("Recommended Doctors", style: TxtStyle.font18SemiBold),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.pushNamed(AppRouter.kAllDoctorScreen);
+                          },
                           child: Text("view all", style: TxtStyle.font12W500),
                         ),
                       ],

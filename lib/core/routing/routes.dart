@@ -1,6 +1,8 @@
 
 import 'package:doctor_appointment/core/mock_data/data/all_doctors_mock_data.dart';
+import 'package:doctor_appointment/core/widgets/change_pass_screen.dart';
 import 'package:doctor_appointment/core/widgets/search_widget.dart';
+import 'package:doctor_appointment/core/widgets/settings_screen.dart';
 import 'package:doctor_appointment/features/alldoctors/presentation/all_doctors_screen.dart';
 import 'package:doctor_appointment/features/auth/presentation/login_screen.dart';
 import 'package:doctor_appointment/features/auth/presentation/register_screen.dart';
@@ -24,13 +26,22 @@ abstract class AppRouter {
   static const editProfileScreen = '/edit_profile';
   static const kHomeScreen = '/home';
   static const kSearchScreen = '/search';
+  static const kSettingsScreen = '/settings';
+  static const kChangePassScreen = '/Change_password';
 
 
   static final router = GoRouter(
-    initialLocation: kLoginScreen,
-    routes: [GoRoute(path: kSignUpScreen,
+    initialLocation: kSettingsScreen,
+    routes: [
+      GoRoute(path: kSignUpScreen,
     name : kSignUpScreen,
     builder: (context, state)=> RegisterScreen()),
+      GoRoute(name:kSettingsScreen ,
+          path: kSettingsScreen,
+      builder: (context, state)=> const SettingsScreen()),
+      GoRoute(name: kChangePassScreen,
+          path: kChangePassScreen,
+       builder: (context , state)=> ChangePassScreen()),
       
       GoRoute(path: kSearchScreen,
       name: kSearchScreen ,

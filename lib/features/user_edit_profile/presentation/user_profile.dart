@@ -6,7 +6,7 @@ import 'package:doctor_appointment/core/routing/routes.dart';
 import 'package:doctor_appointment/core/utils/colors_manager.dart';
 import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/core/widgets/app_button.dart';
-import 'package:doctor_appointment/core/widgets/build_info_tile.dart';
+import 'package:doctor_appointment/core/widgets/custom_widgets/build_info_tile.dart';
 import 'package:doctor_appointment/core/widgets/main_layout.dart';
 import 'package:doctor_appointment/features/user_edit_profile/data/user_profile_model.dart';
 import 'package:doctor_appointment/features/user_edit_profile/logic/profile_cubit.dart';
@@ -45,7 +45,8 @@ class UserProfile extends StatelessWidget {
           centerTitle: true,
 
           actions: [
-            InkWell(child: Padding(
+            InkWell(onTap: (){context.pushNamed(AppRouter.kSettingsScreen);},
+                child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Icon(Icons.settings, color: ColorsManager.primary),
             )),
@@ -108,13 +109,17 @@ class UserProfile extends StatelessWidget {
     return Column(
 
                             children: [
-                          buildInfoTile(Icons.person_2_outlined, "Full Name", userName?.displayName ?? 'User'),
+                          buildInfoTile(Icons.person_2_outlined, "Full Name", userName?.displayName ?? 'User',
+                          TxtStyle.font11BoldGrey,TxtStyle.font15W600DarkBlue),
                               Divider(height: 24,),
-                              buildInfoTile(Icons.email_outlined, "Email Address", userName?.email ?? 'noemail@nodomain.com'),
+                              buildInfoTile(Icons.email_outlined, "Email Address", userName?.email ?? 'noemail@nodomain.com',
+                              TxtStyle.font11BoldGrey, TxtStyle.font15W600DarkBlue),
                               Divider(height: 24,),
-                              buildInfoTile(Icons.phone, "Phone Number", userName?.phoneNumber ?? ''),
+                              buildInfoTile(Icons.phone, "Phone Number", userName?.phoneNumber ?? '',
+                              TxtStyle.font11BoldGrey,TxtStyle.font15W600DarkBlue),
                               Divider(height: 24,),
-                              buildInfoTile(Icons.transgender_outlined, "Gender", gender ),
+                              buildInfoTile(Icons.transgender_outlined, "Gender", gender,
+                              TxtStyle.font11BoldGrey, TxtStyle.font15W600DarkBlue),
 
                         ]);
   },

@@ -7,6 +7,7 @@ import 'package:doctor_appointment/core/widgets/app_text_field.dart';
 import 'package:doctor_appointment/features/user_edit_profile/data/user_profile_model.dart';
 import 'package:doctor_appointment/features/user_edit_profile/logic/profile_cubit.dart';
 import 'package:doctor_appointment/features/user_edit_profile/logic/user_profile_states.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,7 +26,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController emailController;
   late TextEditingController phoneController;
   String selectedGender = 'Male';
+  final user = FirebaseAuth.instance.currentUser;
   String? photoUrl;
+  late String? finalImage= photoUrl ?? user?.photoURL ;
 
   @override
   void initState() {
@@ -36,6 +39,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       text: widget.editProfile?.phoneNumber,
     );
     selectedGender = widget.editProfile?.gender ?? 'Male';
+    photoUrl=widget.editProfile?.photoUrl ?? user?.photoURL;
+
   }
 
   @override
@@ -166,8 +171,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                           child: CircleAvatar(
                             radius: 50,
-                            backgroundColor: Colors.grey.shade500,
-                            backgroundImage: photoUrl !=null? NetworkImage(photoUrl!):null,
+                            // backgroundColor: Colors.grey.shade500,
+                            backgroundImage: photoUrl !=null? NetworkImage(photoUrl!):null
+                            ,
                             child: photoUrl==null? Icon(Icons.person,size: 60,color: Colors.grey,):
                             null,
                     
@@ -190,11 +196,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   },
 )
                   ,
-                  SizedBox(height: 10),
+                  SizedBox(height: 5),
                   Center(
                     child: Text(
-                      widget.editProfile?.fullName ?? '',
-                      style: TxtStyle.font24W600Black,
+                      'change profile photo',
+                      style: TxtStyle.font16W400Regular,
                     ),
                   ),
                   SizedBox(height: 30),
@@ -213,62 +219,68 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                       ],
                     ),
-                    child: Column(
-                      children: [
-                        CustomTextField(
-                          controller: nameController,
-                          hintText: "Full Name",
-                          textInput: (val) {
-                            return null;
-                          },
-                          prefixIcon: null,
-                        ),
-                        Divider(height: 24),
-                        CustomTextField(
-                          textInput: (val) {
-                            return null;
-                          },
-                          controller: emailController,
-                          hintText: "Email Address",
-                        ),
-
-                        Divider(height: 24),
-                        CustomTextField(
-                          textInput: (val) {
-                            return null;
-                          },
-                          controller: phoneController,
-                          hintText: "Phone Number",
-                        ),
-                        Divider(height: 24),
-
-                        Row(
-                          children: [
-                            Text("Gender", style: TxtStyle.font12W500),
-                            Radio(
-                              value: "Male",
-                              groupValue: selectedGender,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedGender = value!;
-                                });
-                              },
-                            ),
-                            Text("Male", style: TxtStyle.font12W500),
-                            Radio(
-                              value: "Female",
-                              groupValue: selectedGender,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedGender = value!;
-                                });
-                              },
-                            ),
-                            Text("Female", style: TxtStyle.font12W500),
-                          ],
-                        ),
-
-                      ],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        spacing: 3,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Full name',style: TxtStyle.font14RegularBlue,),
+                          CustomTextField(
+                            controller: nameController,
+                            hintText: user?.displayName ?? ' ',
+                            textInput: (val) {
+                              return null;
+                            },
+                            prefixIcon: null,
+                          ),
+                          Divider(height: 20),
+                          Text('Email Address',style: TxtStyle.font14RegularBlue,),
+                          CustomTextField(
+                            textInput: (val) {
+                              return null;
+                            },
+                            controller: emailController,
+                            hintText: user?.email ?? "noemail@nodomain.com",
+                          ),
+                      
+                          Divider(height: 20),
+                          Text('Phone Number',style: TxtStyle.font14RegularBlue,),
+                          CustomTextField(
+                            textInput: (val) {
+                              return null;
+                            },
+                            controller: phoneController,
+                            hintText: user?.phoneNumber ?? '+01 000 0000 0000',
+                          ),
+                          Divider(height: 20),
+                          Text('Gender',style: TxtStyle.font14RegularBlue,),
+                          Row(
+                            children: [
+                              Text("Gender", style: TxtStyle.font12W500),
+                              Radio(
+                                value: "Male",
+                                groupValue: selectedGender,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedGender = value!;
+                                  });
+                                },
+                              ),
+                              Text("Male", style: TxtStyle.font12W500),
+                              Radio(
+                                value: "Female",
+                                groupValue: selectedGender,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedGender = value!;
+                                  });
+                                },
+                              ),
+                              Text("Female", style: TxtStyle.font12W500),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20),

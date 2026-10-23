@@ -363,7 +363,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 : "Create Account",
                             onPress: () {
                               if (!isChecked){
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please accept terms and conditions"),
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text("Please accept terms and conditions"),
                                   backgroundColor:Colors.redAccent ,behavior: SnackBarBehavior.floating,));
                                 return;
                               }
