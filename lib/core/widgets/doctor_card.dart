@@ -5,9 +5,13 @@ import 'package:doctor_appointment/features/doctor_details/presentation/doctor_d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+
+import '../routing/routes.dart';
+import '../utils/app_extensions.dart';
 
 
-class DoctorCard extends StatelessWidget {
+class DoctorCard extends StatefulWidget {
   const DoctorCard({
     super.key,
    required this.photo,
@@ -30,9 +34,17 @@ class DoctorCard extends StatelessWidget {
   final bool isAvailable;
   final dynamic doctorData;
 
+  @override
+  State<DoctorCard> createState() => _DoctorCardState();
+}
+
+class _DoctorCardState extends State<DoctorCard> {
+  bool isClicked= false;
 
   @override
   Widget build(BuildContext context) {
+   final isDarkMode= context.isDark;
+   final local=context.l1on;
     return BlocProvider(
       create: (context) => AllDoctorCubit(),
       child: Card(
@@ -41,7 +53,7 @@ class DoctorCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
           side: BorderSide(
-            color: Colors.grey.shade300,
+            color:isDarkMode? Colors.grey.shade800: Colors.grey.shade300,
             width: 1.w,
           ), // الإطار الخارجي الخفيف
         ),
@@ -58,7 +70,7 @@ class DoctorCard extends StatelessWidget {
                   // صورة الطبيب المستديرة
                   CircleAvatar(
                     radius: 40.r,
-                    backgroundImage: AssetImage(photo),
+                    backgroundImage: AssetImage(widget.photo),
                     child: ClipRRect(
                       borderRadius: BorderRadiusGeometry.circular(50),
                       child:Transform.scale(
@@ -81,9 +93,11 @@ class DoctorCard extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: isAvailable
-                                ? Color.fromRGBO(121, 242, 240, 0.3)
-                                : Color.fromRGBO(255, 127, 127, 1),
+                            color: widget.isAvailable ? (isDarkMode?
+                                 const Color.fromRGBO(121, 242, 240, 0.3):
+                                 const Color.fromRGBO(121, 242, 240, 0.15)
+                            ) :  const Color.fromRGBO(255, 127, 127, 1),
+
                             // لون خلفية لبني خفيف جداً
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -94,7 +108,7 @@ class DoctorCard extends StatelessWidget {
                                 width: 8.w,
                                 height: 8.h,
                                 decoration: BoxDecoration(
-                                  color: isAvailable
+                                  color: widget.isAvailable
                                       ? Color.fromRGBO(0, 106, 104, 1)
                                       : Colors.redAccent,
                                   // نقطة خضراء غامقة
@@ -103,13 +117,15 @@ class DoctorCard extends StatelessWidget {
                               ),
                               const SizedBox(width: 6),
                               Text(
-                                isAvailable
-                                    ? "Available Today"
-                                    : "Not Available Today",
+                                widget.isAvailable
+                                    ? local.available_today
+                                    : local.not_available_today,
                                 style: TextStyle(
-                                  color: isAvailable
-                                      ? Color.fromRGBO(0, 106, 104, 1)
-                                      : Colors.white54,
+                                  color: widget.isAvailable
+                                      ? (isDarkMode?Color.fromRGBO(0, 106, 104, 1):
+                                  Colors.tealAccent
+                                  )
+                                      : Colors.white70,
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -127,18 +143,19 @@ class DoctorCard extends StatelessWidget {
                               size: 18,
                             ),
                             const SizedBox(width: 4),
-                            const Text(
+                            Text(
                               "4.9",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
+                                color: isDarkMode? Colors.black: Colors.white70,
                               ),
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              "(124 reviews)",
+                              local.reviews_format("124"),
                               style: TextStyle(
-                                color: Colors.grey.shade600,
+                                color:isDarkMode?  Colors.grey.shade600:Colors.white70,
                                 fontSize: 14,
                               ),
                             ),
@@ -153,19 +170,19 @@ class DoctorCard extends StatelessWidget {
 
               // --- معلومات الطبيب ---
               Text(
-                doctorName,
+                widget.doctorName,
                 style: TextStyle(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color:isDarkMode?  Colors.black: Colors.white70,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
-                speciality,
+                widget.speciality,
                 style: TextStyle(
                   fontSize: 16.sp,
-                  color: Color.fromRGBO(0, 71, 141, 1), // لون التخصص الأزرق
+                  color: isDarkMode? Color.fromRGBO(0, 71, 141, 1): Colors.blue.shade200, // لون التخصص الأزرق
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -177,11 +194,11 @@ class DoctorCard extends StatelessWidget {
                   Icon(
                     Icons.location_on_outlined,
                     size: 18.sp,
-                    color: Colors.grey.shade600,
+                    color: isDarkMode?Colors.grey.shade600:Colors.white70,
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    address,
+                    widget.address,
                     style: TextStyle(color: Colors.grey.shade700, fontSize: 14.sp),
                   ),
                 ],
@@ -194,19 +211,20 @@ class DoctorCard extends StatelessWidget {
                   Icon(
                     Icons.payments_outlined,
                     size: 18,
-                    color: Colors.grey.shade600,
+                    color: isDarkMode? Colors.grey.shade600: Colors.white70,
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    appointPrice.toString(),
-                    style: TextStyle(color: Colors.grey.shade700, fontSize: 14),
+                    widget.appointPrice.toString(),
+                    style: TextStyle(color:
+                    isDarkMode? Colors.grey.shade700: Colors.white70, fontSize: 14),
                   ),
                 ],
               ),
               const SizedBox(height: 16),
 
               // الخط الفاصل الخفيف
-              Divider(color: Colors.grey.shade200, height: 1),
+              Divider(color:isDarkMode? Colors.grey.shade200: Colors.grey.shade800, height: 1),
               const SizedBox(height: 16),
 
               // --- الأزرار السفلية ---
@@ -215,27 +233,51 @@ class DoctorCard extends StatelessWidget {
                   // زرار القلب (المفضلة)
                   Container(
                     decoration: BoxDecoration(
-                      border: BoxBorder.all(color: Colors.grey.shade300),
+                     color: isDarkMode ? Colors.grey.shade100:Colors.grey.shade800 ,
+                      border: BoxBorder.all(color:isDarkMode? Colors.grey.shade300:
+                      Colors.white70),
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
-                      icon: const Icon(
-                        Icons.favorite_border,
-                        color: Color(0xff0B1A30),
-                      ),
-                      onPressed: () {},
+                      icon:  Icon(
+                        isClicked? Icons.favorite:Icons.favorite_border ,
+                        size: 40,
+                        color: isClicked? Colors.redAccent:Colors.grey.shade300 ),
+                      onPressed: () {
+                        setState(() {
+                          isClicked=!isClicked;
+                        });
+                      },
                     ),
                   ),
                   const SizedBox(width: 12),
                   // زرار View Profile
                   Expanded(
                     child: AppButton(
-                      barWidth: 141,
-                      txt: "View Profile",
-                      onPress: () {},
-                      buttonColor: Colors.white,
-                      buttonTxtStyle: TxtStyle.font14W700,
-                      borderColor: Color.fromRGBO(0, 106, 104, 0.3),
+                      barWidth: 141.w,
+                      txt: local.view_profile,
+                      onPress: () {
+                        context.pushNamed(AppRouter.kDoctorDetailScreen,
+                            extra: {
+                              'docImage': widget.photo,
+                              'docName': widget.doctorName,
+                              'docExperience': widget.doctorData.degree ?? "",
+                              'docDescription': widget.doctorData.description ?? "",
+                              'docSpeciality': widget.doctorData.specialization?.name ?? "",
+                              'docEmail': widget.doctorData.email ?? "",
+                              'docPhoneNumber': widget.doctorData.phone ?? "",
+                              'startTime': widget.doctorData.startTime ?? "",
+                              'endTime': widget.doctorData.endTime ?? "",
+                              'doctorAddress': widget.doctorData.address ?? "",
+                              'doctorIndex': widget.doctorIndex,
+                            });
+                      },
+                      buttonColor: isDarkMode ?   Colors.white:const Color(0xFF1F1F1F),
+                      buttonTxtStyle: isDarkMode? TxtStyle.font14W700:TextStyle(
+                        color: Colors.white70,
+                        fontSize: 14, fontWeight: FontWeight.w700
+                      ),
+                      borderColor: isDarkMode? Color.fromRGBO(0, 106, 104, 0.3): Colors.white54,
                       borderWidth: 2,
                     ),
                   ),
@@ -243,25 +285,25 @@ class DoctorCard extends StatelessWidget {
                   // زرار Book Now
          Expanded(
     child: AppButton(
-    barWidth: 124,
-        txt: "Book Now",
+    barWidth: 124.w,
+        txt: local.book_now,
         onPress: () {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => DoctorDetails(
-            docImage: photo,
-            docName: doctorName,
+            docImage: widget.photo,
+            docName: widget.doctorName,
             docDescription:
-            doctorData.description ?? "",
-            docExperience: doctorData.degree ?? "",
+            widget.doctorData.description ?? "",
+            docExperience: widget.doctorData.degree ?? "",
             docSpeciality:
-            doctorData.specialization.name ?? "",
-            docEmail: doctorData.email ?? "",
-            docPhoneNumber: doctorData.phone ?? "",
-            startTime: doctorData.startTime ?? "",
-              endTime: doctorData.endTime ?? "",
-            doctorAddress: doctorData.address ?? "",doctorIndex: doctorIndex,
+            widget.doctorData.specialization.name ?? "",
+            docEmail: widget.doctorData.email ?? "",
+            docPhoneNumber: widget.doctorData.phone ?? "",
+            startTime: widget.doctorData.startTime ?? "",
+              endTime: widget.doctorData.endTime ?? "",
+            doctorAddress: widget.doctorData.address ?? "",doctorIndex: widget.doctorIndex,
 
           ),
         ),

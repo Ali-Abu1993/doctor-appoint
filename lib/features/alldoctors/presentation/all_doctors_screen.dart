@@ -2,6 +2,7 @@ import 'package:doctor_appointment/core/constance/available_doctors.dart';
 import 'package:doctor_appointment/core/helper/debounce.dart';
 import 'package:doctor_appointment/core/mock_data/logic/mock_all_doctors_cubit.dart';
 import 'package:doctor_appointment/core/routing/routes.dart';
+import 'package:doctor_appointment/core/utils/app_extensions.dart';
 import 'package:doctor_appointment/core/utils/colors_manager.dart';
 import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/core/widgets/app_text_field.dart';
@@ -34,29 +35,32 @@ class _AllDoctorsScreenState extends State<AllDoctorsScreen> {
 int selectedIndex =0;
   @override
   Widget build(BuildContext context) {
+    final local = context.l1on;
+    final isDark = context.isDark;
     return BlocProvider(
       create: (context) => MockAllDoctorsCubit()..getAllDoctors(),
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Find a Doctor",
-            style:TxtStyle.font20W700Blue
+            local.find_a_doctor,
+            style:isDark? TxtStyle.font18SemiBoldWhite:TxtStyle.font18SemiBold(context)
           ),
           centerTitle: true,
-          backgroundColor: Colors.white,
+          backgroundColor: isDark? ColorsManager.primary:Colors.white,
           actions: [
             InkWell(
               onTap: () {},
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Icon(Icons.notifications_none, color: ColorsManager.primary,),
+                child: Icon(Icons.notifications_none,
+                  color: isDark? Colors.white70:ColorsManager.primary,),
               ),
             ),
           ],
           leading: IconButton(onPressed: (){
             context.pop();
           }, icon: Icon(Icons.arrow_back,
-          color: ColorsManager.primary,)),
+          color: isDark? Colors.white70:ColorsManager.primary,)),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -66,7 +70,7 @@ int selectedIndex =0;
                 child: Builder(
                   builder: (context) {
                     return CustomTextField(
-                      hintText: "Cardiologist",
+                      hintText: local.speciality_title_1,
                       controller: doctorDetails,
                       textInput: (value) {
                         return null;
@@ -108,7 +112,7 @@ int selectedIndex =0;
                                 ),
                                     onPressed: (){},
                                   icon: Icon(Icons.filter_alt_outlined),
-                                  label: const Text("Filters (2)",
+                                  label:  Text(local.filters_count('5.2'),
                                   maxLines: 1, overflow: TextOverflow.ellipsis,),
                                     ),
                               ),
@@ -120,7 +124,7 @@ int selectedIndex =0;
                                 child: ElevatedButton(style: ElevatedButton.styleFrom(
 
                                 ),
-                                  onPressed: (){}, child: Text("Rating 4.5+",
+                                  onPressed: (){}, child: Text(local.rating_filter,
                                     maxLines:1 ,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,
                                   softWrap: false,),),
                               ),
@@ -130,7 +134,7 @@ int selectedIndex =0;
                               alignment: Alignment.centerLeft,
                               child: SizedBox(width: 122,
                                 child: ElevatedButton(style: ButtonStyle(),
-                                  onPressed: (){}, child: Text("Distance: < 5mi",
+                                  onPressed: (){}, child: Text(local.distance_filter,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,),),
                               ),

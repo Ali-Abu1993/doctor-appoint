@@ -80,5 +80,113 @@
   "err_valid_phone": "Please enter a valid phone number",
   "err_enter_password_again": "Please enter your password again",
   "err_password_match": "Please enter your password correctly",
-  "err_accept_terms": "Please accept terms and conditions"
-}
+  "err_accept_terms": "Please accept terms and conditions",
+  "profile_title": "Profile",
+    "edit_profile_title": "Edit profile",
+    "member_since": "Member since {year}",
+    "@member_since": {
+      "placeholders": {
+        "year": {
+          "type": "String"
+        }
+      }
+    },
+    "change_profile_photo": "change profile photo",
+    "update_profile": "Update profile",
+    "updating": "Updating...",
+    "edit_your_profile": "Edit your profile",
+    "profile_updated_success": "Profile updated successfully",
+    "image_updated_success": "Image updated successfully",
+    "default_user_name": "User",
+    "default_email": "noemail@nodomain.com",
+    "default_phone": "+01 000 0000 0000",
+    "not_specified": "Not Specified",
+    "home_icon": "Home",
+    "search_icon": "Search",
+    "booking_icon": "Booking",
+    "available_today": "Available Today",
+      "not_available_today": "Not Available Today",
+      "reviews_format": "({count} reviews)",
+      "@reviews_format": {
+        "placeholders": {
+          "count": {
+            "type": "String"
+          }
+        }
+      },
+      "view_profile": "View Profile",
+      "book_now": "Book Now",
+      "good_morning": "Good Morning!",
+        "good_afternoon": "Good Afternoon!",
+        "good_evening": "Good Evening!",
+        "hello_user": "Hello, {name}!",
+        "@hello_user": {
+          "placeholders": {
+            "name": {
+              "type": "String"
+            }
+          }
+        },
+        "search_hint": "Search doctors, specialties, clinics...",
+        "specialities": "Specialities",
+        "see_all": "see all",
+        "recommended_doctors": "Recommended Doctors",
+        "view_all": "view all",
+        "settings": "Settings",
+        "profile": "Profile",
+        "logout": "Logout",
+        "booking_confirmed_notification": "Your appointment with the doctor has been confirmed",
+        "new_promotions_notification": "New promotions for medical plans",
+        "doc_app_title": "Home",
+        "doctor_details_title": "Doctor Details",
+          "about": "About",
+          "languages_format": "Languages: {languages}",
+          "@languages_format": {
+            "placeholders": {
+              "languages": {
+                "type": "String"
+              }
+            }
+          },
+          "address_format": "Address is '{address}'",
+          "@address_format": {
+            "placeholders": {
+              "address": {
+                "type": "String"
+              }
+            }
+          },
+          "available_between_format": "Available between: {time}",
+          "@available_between_format": {
+            "placeholders": {
+              "time": {
+                "type": "String"
+              }
+            }
+          },
+          "select_date": "Select Date",
+          "choose_date": "choose date",
+          "available_time": "Available Time",
+          "morning": "Morning",
+          "evening": "Evening",
+          "booking_completed": "Booking is completed",
+          "loading": "Loading...",
+          "confirm_appointment": "Confirm appointment",
+          "please_select_time_slot": "Please select a time slot",
+          "find_a_doctor": "Find a Doctor",
+          "filters_count": "Filters ({count})",
+          "@filters_count": {
+            "placeholders": {
+              "count": {
+                "type": "String"
+              }
+            }
+          },
+          "rating_filter": "Rating 4.5+",
+          "distance_filter": "Distance: < 5mi",
+          "speciality_title_1": "Cardiology",
+          "speciality_title_2": "Dental",
+          "speciality_title_3": "General",
+          "speciality_title_4": "Endocrinology"
+
+ }

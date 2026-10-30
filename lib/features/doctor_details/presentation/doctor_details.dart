@@ -4,6 +4,7 @@ import 'package:doctor_appointment/core/constance/available_doctors.dart';
 import 'package:doctor_appointment/core/helper/cache_helper.dart';
 import 'package:doctor_appointment/core/mock_data/logic/mock_all_doctors_cubit.dart';
 import 'package:doctor_appointment/core/routing/routes.dart';
+import 'package:doctor_appointment/core/utils/app_extensions.dart';
 import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/core/widgets/app_button.dart';
 import 'package:doctor_appointment/core/widgets/available_time.dart';
@@ -15,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class DoctorDetails extends StatelessWidget {
+class DoctorDetails extends StatefulWidget {
   const DoctorDetails({
     super.key,
     this.selectedTimeSlot,
@@ -48,10 +49,19 @@ class DoctorDetails extends StatelessWidget {
   final String? selectedTimeSlot;
 
   @override
+  State<DoctorDetails> createState() => _DoctorDetailsState();
+}
+
+class _DoctorDetailsState extends State<DoctorDetails> {
+  String? selectedTimeSlot;
+  @override
   Widget build(BuildContext context) {
+    final local = context.l1on;
+    final isDark =context.isDark;
     return Scaffold(
       appBar: AppBar(
-        title: Text("DocPoint", style: TxtStyle.font20W700Blue),
+        title: Text(local.doctor_details_title,
+             style: isDark? TxtStyle.font18SemiBoldWhite:TxtStyle.font18SemiBold(context)),
         centerTitle: true,
 
         actions: [
@@ -94,11 +104,11 @@ class DoctorDetails extends StatelessWidget {
                         if (state is AllDoctorSuccessState) {
                           return Card(
                             elevation: 0,
-                            color: Colors.white,
+                            color: isDark?Colors.white:Colors.grey.shade300,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                               side: BorderSide(
-                                color: Colors.grey.shade300,
+                                color: isDark?Colors.grey.shade300:Colors.white70,
                                 width: 1,
                               ),
                             ),
@@ -117,7 +127,7 @@ class DoctorDetails extends StatelessWidget {
                                     child: Transform.scale(
                                       scale: 1.65,
                                       child: Image.network(
-                                        docImage,
+                                        widget.docImage,
                                         fit: BoxFit.contain,
                                         alignment: Alignment.center,
                                         errorBuilder:
@@ -132,7 +142,7 @@ class DoctorDetails extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Text(docName, style: TxtStyle.font24W600Black),
+                                Text(widget.docName, style: TxtStyle.font24W600Black(context)),
 
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -143,19 +153,19 @@ class DoctorDetails extends StatelessWidget {
                                       size: 16,
                                     ),
                                     Text(
-                                      "4.9 (124 reviews)",
-                                      style: TxtStyle.font14W700,
+                                      local.reviews_format("4.9"),
+                                      style: isDark?TxtStyle.font14W700:TxtStyle.font14W700White,
                                     ),
                                   ],
                                 ),
-                                Text(docEmail, style: TxtStyle.font14W700),
+                                Text(widget.docEmail,style: isDark?TxtStyle.font14W700:TxtStyle.font14W700White),
                                 Text(
-                                  docPhoneNumber,
-                                  style: TxtStyle.font14W700,
+                                  widget.docPhoneNumber,
+                                  style: isDark?TxtStyle.font14W700:TxtStyle.font14W700White,
                                 ),
                                 Text(
-                                  docSpeciality,
-                                  style: TxtStyle.font16Medium,
+                                  widget.docSpeciality,
+                                  style: TxtStyle.font16Medium(context),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -177,8 +187,8 @@ class DoctorDetails extends StatelessWidget {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          docExperience,
-                                          style: TxtStyle.font12W500,
+                                          widget.docExperience,
+                                          style: isDark?TxtStyle.font12W500:TxtStyle.font12W500White,
                                         ),
                                       ),
                                     ),
@@ -198,8 +208,9 @@ class DoctorDetails extends StatelessWidget {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          "$startTime-$endTime",
-                                          style: TxtStyle.font12W500,
+
+                                          "${widget.startTime}-${widget.endTime}",
+                                          style: isDark?TxtStyle.font12W500:TxtStyle.font12W500White,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -228,37 +239,37 @@ class DoctorDetails extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
 
                       children: [
-                        Text("About", style: TxtStyle.font18SemiBold),
+                        Text(local.about, style: TxtStyle.font18SemiBold(context)),
 
                         Text(
-                          "$docDescription\t$docSpeciality\t$docExperience\n"
-                          "Languages: $docLanguage\n"
-                          "Address is '$doctorAddress'\n"
-                          "Available between: $startTime-$endTime",
-                          style: TxtStyle.font14RegularBlue,
+                          "${widget.docDescription}\t${widget.docSpeciality}\t${widget.docExperience}\n"
+                          "Languages: ${widget.docLanguage}\n"
+                          "Address is '${widget.doctorAddress}'\n"
+                          "Available between: ${widget.startTime}-${widget.endTime}",
+                          style: isDark?TxtStyle.font14RegularBlue:TxtStyle.font14RegularBlueWhite,
                         ),
                         SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Select Date", style: TxtStyle.font18SemiBold),
+                            Text(local.select_date, style: TxtStyle.font18SemiBold(context)),
                             TextButton(
                               onPressed: () {},
-                              child: Text("choose date"),
+                              child: Text(local.choose_date),
                             ),
                           ],
                         ),
 
                         Calendar(),
                         SizedBox(height: 10),
-                        Text("Available Time", style: TxtStyle.font18SemiBold),
+                        Text(local.available_time, style: TxtStyle.font18SemiBold(context)),
                         SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Icon(Icons.light_mode_outlined),
                             SizedBox(width: 3),
-                            Text("Morning", style: TxtStyle.font14SemiBold),
+                            Text(local.morning, style: TxtStyle.font14SemiBold),
                           ],
                         ),
 
@@ -269,13 +280,21 @@ class DoctorDetails extends StatelessWidget {
                             }
                             if (state is AllDoctorSuccessState) {
                               final currentDoctor =
-                                  state.doctorModel.data![doctorIndex];
+                                  state.doctorModel.data![widget.doctorIndex];
 
                               return AvailableTime(
                                 timeSlots: generateMorningSlots(
                                   currentDoctor.startTime,
                                   currentDoctor.endTime,
                                 ),
+                                selectedTime: selectedTimeSlot,
+                                onTimeSelected: (time){
+                                  setState(() {
+                                    selectedTimeSlot=time;
+                                  });
+
+                                },
+
                               );
                             }
                             if (state is AllDoctorErrorState) {
@@ -290,23 +309,30 @@ class DoctorDetails extends StatelessWidget {
                           children: [
                             Icon(Icons.nightlight_outlined),
                             SizedBox(width: 3),
-                            Text("Evening", style: TxtStyle.font14SemiBold),
+                            Text(local.evening, style: isDark?TxtStyle.font14SemiBold:TxtStyle.font14SemiBoldWhite),
                           ],
                         ),
                         SizedBox(height: 10),
                         BlocBuilder<MockAllDoctorsCubit, AllDoctorsStates>(
                           builder: (context, state) {
+
                             if (state is AllDoctorLoadingState) {
                               return Center(child: CircularProgressIndicator());
                             }
                             if (state is AllDoctorSuccessState) {
                               final currentDoctor =
-                                  state.doctorModel.data![doctorIndex];
+                                  state.doctorModel.data![widget.doctorIndex];
                               return AvailableTime(
                                 timeSlots: getEveningSlots(
                                   currentDoctor.startTime,
                                   currentDoctor.endTime,
                                 ),
+                                selectedTime: selectedTimeSlot,
+                                onTimeSelected: (time){
+                                  setState(() {
+                                    selectedTimeSlot=time;
+                                  });
+                                },
                               );
                             }
                             if (state is AllDoctorErrorState) {
@@ -334,9 +360,10 @@ class DoctorDetails extends StatelessWidget {
                               );
                             } else if ( state is StoreSuccessState){
                               ScaffoldMessenger.of(context).
-                              showSnackBar(SnackBar(content: Text('Booking is completed'),
+                              showSnackBar(SnackBar(content: Text(local.booking_completed),
                                 backgroundColor:Colors.green ,behavior: SnackBarBehavior.floating,));
-                              context.pop();
+                              context.pop();  //to close Dialogue
+                              context.pop();  // to go back after confirming the appointment
                             }
                             if (state is StoreErrorState) {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -360,8 +387,8 @@ class DoctorDetails extends StatelessWidget {
                                 child: AppButton(
                                   barWidth: double.infinity,
                                   txt: isLoading
-                                      ? "Loading..."
-                                      : "Confirm appointment",
+                                      ? local.loading
+                                      : local.confirm_appointment,
                                   onPress: isLoading
                                       ? (){}
                                       : () {
@@ -371,7 +398,7 @@ class DoctorDetails extends StatelessWidget {
                                             ).showSnackBar(
                                               SnackBar(
                                                 content: Text(
-                                                  "Please select a time slot",
+                                                  local.please_select_time_slot,
                                                 ),
                                               ),
                                             );

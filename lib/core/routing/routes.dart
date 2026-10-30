@@ -31,7 +31,7 @@ abstract class AppRouter {
 
 
   static final router = GoRouter(
-    initialLocation: kSettingsScreen,
+    initialLocation: kProfileScreen,
     routes: [
       GoRoute(path: kSignUpScreen,
     name : kSignUpScreen,

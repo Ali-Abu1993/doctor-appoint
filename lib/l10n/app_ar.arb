@@ -71,5 +71,112 @@
   "err_valid_phone": "الرجاء إدخال رقم هاتف صالح",
   "err_enter_password_again": "الرجاء إدخال كلمة المرور مرة أخرى",
   "err_password_match": "الرجاء إدخال كلمة المرور بشكل صحيح",
-  "err_accept_terms": "الرجاء قبول الشروط والأحكام"
+  "err_accept_terms": "الرجاء قبول الشروط والأحكام",
+  "profile_title": "الملف الشخصي",
+    "edit_profile_title": "تعديل الملف الشخصي",
+    "member_since": "عضو منذ {year}",
+    "@member_since": {
+      "placeholders": {
+        "year": {
+          "type": "String"
+        }
+      }
+    },
+    "change_profile_photo": "تغيير صورة الملف الشخصي",
+      "update_profile": "تحديث الملف الشخصي",
+      "updating": "جاري التحديث...",
+      "edit_your_profile": "تعديل ملفك الشخصي",
+      "profile_updated_success": "تم تحديث الملف الشخصي بنجاح",
+      "image_updated_success": "تم تحديث الصورة بنجاح",
+      "default_user_name": "مستخدم",
+      "default_email": "noemail@nodomain.com",
+      "default_phone": "+01 000 0000 0000",
+      "not_specified": "غير محدد",
+      "home_icon": "الرئيسية",
+      "search_icon": "البحث",
+      "booking_icon": "حجز",
+      "available_today": "متاح اليوم",
+        "not_available_today": "غير متاح اليوم",
+        "reviews_format": "({count} تقييم)",
+        "@reviews_format": {
+          "placeholders": {
+            "count": {
+              "type": "String"
+            }
+          }
+        },
+        "view_profile": "عرض الملف الشخصي",
+        "book_now": "احجز الان",
+        "good_morning": "صباح الخير!",
+          "good_afternoon": "مساء الخير!",
+          "good_evening": "مساء الخير!",
+          "hello_user": "أهلاً، {name}!",
+          "@hello_user": {
+            "placeholders": {
+              "name": {
+                "type": "String"
+              }
+            }
+          },
+          "search_hint": "ابحث عن الأطباء، التخصصات، العيادات...",
+          "specialities": "التخصصات",
+          "see_all": "عرض الكل",
+          "recommended_doctors": "الأطباء الموصى بهم",
+          "view_all": "عرض الكل",
+          "settings": "الإعدادات",
+          "profile": "الملف الشخصي",
+          "logout": "تسجيل الخروج",
+          "booking_confirmed_notification": "تم تأكيد موعد حجزك مع الدكتور",
+          "new_promotions_notification": "عروض جديدة للخطط الطبية",
+          "doc_point_title": "الرئيسية",
+          "doctor_details_title": "تفاصيل الطبيب",
+            "about": "نبذة عن الطبيب",
+            "languages_format": "اللغات: {languages}",
+            "@languages_format": {
+              "placeholders": {
+                "languages": {
+                  "type": "String"
+                }
+              }
+            },
+            "address_format": "العنوان '{address}'",
+            "@address_format": {
+              "placeholders": {
+                "address": {
+                  "type": "String"
+                }
+              }
+            },
+            "available_between_format": "متاح بين: {time}",
+            "@available_between_format": {
+              "placeholders": {
+                "time": {
+                  "type": "String"
+                }
+              }
+            },
+            "select_date": "اختر التاريخ",
+            "choose_date": "اختر تاريخاً",
+            "available_time": "الأوقات المتاحة",
+            "morning": "صباحاً",
+            "evening": "مساءً",
+            "booking_completed": "تم الحجز بنجاح",
+            "loading": "جاري التحميل...",
+            "confirm_appointment": "تأكيد الموعد",
+            "please_select_time_slot": "الرجاء اختيار وقت الحجز",
+            "find_a_doctor": "البحث عن طبيب",
+            "filters_count": "الفلاتر ({count})",
+            "@filters_count": {
+              "placeholders": {
+                "count": {
+                  "type": "String"
+                }
+              }
+            },
+            "rating_filter": "التقييم 4.5+",
+            "distance_filter": "المسافة: أقل من 5 أميال",
+            "speciality_title_1": "أمراض القلب",
+             "speciality_title_2": "الأسنان",
+             "speciality_title_3": "عام",
+              "speciality_title_4": "إخصائي الغدد الصماء"
 }

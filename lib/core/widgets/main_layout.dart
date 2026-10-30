@@ -1,3 +1,5 @@
+import 'package:doctor_appointment/core/utils/app_extensions.dart';
+import 'package:doctor_appointment/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,12 +21,14 @@ class MainLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   final local = context.l1on;
+   final isDark = context.isDark;
     return
        BottomNavigationBar(
-        selectedItemColor: ColorsManager.secondary,
-        backgroundColor: ColorsManager.white,
+        selectedItemColor: isDark? Colors.blue[200]:ColorsManager.secondary,
+        backgroundColor: isDark? ColorsManager.white: Colors.black38,
 
-        unselectedItemColor: ColorsManager.unselectedIcon,
+        unselectedItemColor: isDark?  ColorsManager.unselectedIcon:Colors.white70,
         unselectedLabelStyle: TxtStyle.font12W500,
         currentIndex: calculateSelectedIndex(context),
         onTap: (val) {
@@ -43,20 +47,20 @@ class MainLayout extends StatelessWidget {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
-            label: "Home",
+            label: local.home_icon,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: "Search",
+            label: local.search_icon,
             backgroundColor: ColorsManager.unselectedIcon,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today_outlined),
-            label: "Booking",
+            label: local.booking_icon,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: "profile",
+            label: local.profile_title,
           ),
         ],
       );

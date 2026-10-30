@@ -1,8 +1,9 @@
 import 'package:doctor_appointment/core/helper/theme_cubit.dart';
+import 'package:doctor_appointment/core/utils/app_extensions.dart';
+import 'package:doctor_appointment/core/utils/colors_manager.dart';
 import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/features/auth/logic/cubit.dart';
 import 'package:doctor_appointment/l10n/app_localizations.dart';
-import 'package:doctor_appointment/main.dart';
 import 'package:doctor_appointment/service/biometrics_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -42,13 +43,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       create: (context) => AuthCubit(),
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(onPressed: () {
+            context.pop();
+          }, icon: Icon(Icons.arrow_back,
+              color:context.isDark? Colors.white70: Colors.white70)),
           title: Text(
-            AppLocalizations.of(context)!.title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            local!.title,
+            style:
+            TextStyle(fontWeight: FontWeight.bold, fontSize: 20,
+                color:context.isDark? Colors.white70:Colors.white),
           ),
           centerTitle: true,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black87,
+          backgroundColor: context.isDark? ColorsManager.primary:Colors.black12,
           elevation: 0.5,
         ),
         body: SingleChildScrollView(
@@ -60,7 +66,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 // 1. كارت الملف الشخصي المصغر
                 buildInfoTile(
                     Icons.person, user?.displayName ?? '', user?.email ?? '',
-                    TxtStyle.font15W600DarkBlue, TxtStyle.font11BoldGrey
+                    context.isDark? TxtStyle.font15W600DarkBlue: TextStyle(
+                      color: Colors.white60,
+                      fontSize: 15,fontWeight: FontWeight.w600
+                    ),
+                    TxtStyle.font11BoldGrey
                 ),
 
                 const SizedBox(height: 24),
@@ -68,7 +78,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 // 2. قسم إعدادات الحساب
                 buildSectionTitle(AppLocalizations.of(context)!.header1),
                 buildSettingsGroup([
-                  buildListTile(
+                  buildListTile(context,
                     icon: Icons.person_outline_rounded,
                     title: local!.edit_profile,
                     subtitle: local.edit_profile_subtitle,
@@ -77,7 +87,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     },
                   ),
                   const Divider(height: 1, indent: 56),
-                  buildListTile(
+                  buildListTile(context,
                     icon: Icons.lock_outline_rounded,
                     title: local.security_and_password,
                     subtitle: local.security_subtitle,
@@ -86,7 +96,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     },
                   ),
                   const Divider(height: 1, indent: 56),
-                  buildSwitchTile(
+                  buildSwitchTile(context,
                     icon: Icons.fingerprint_rounded,
                     title: local.biometric_login,
                     value: biometricsEnabled,
@@ -122,7 +132,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 // 3. قسم التفضيلات والتطبيق
                 buildSectionTitle(local.header2),
                 buildSettingsGroup([
-                  buildSwitchTile(
+                  buildSwitchTile(context,
                     icon: Icons.notifications_none_rounded,
                     title: local.push_notifications,
                     value: notificationsEnabled,
@@ -130,7 +140,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         setState(() => notificationsEnabled = val),
                   ),
                   const Divider(height: 1, indent: 56),
-                  buildListTile(
+                  buildListTile(context,
                       icon: Icons.language_rounded,
                       title: local.app_language,
                       trailingText: selectedLanguage,
@@ -147,7 +157,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                 ),
                 const Divider(height: 1, indent: 56),
-                buildSwitchTile(
+                buildSwitchTile(context,
                   icon: Icons.dark_mode_outlined,
                   title: local.dark_mode,
                   value: context.watch<ThemeCubit>().state==ThemeMode.dark,
@@ -164,19 +174,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
           // 4. قسم الدعم والمساعدة
           buildSectionTitle(local.header3),
           buildSettingsGroup([
-            buildListTile(
+            buildListTile(context,
               icon: Icons.help_outline_rounded,
               title: local.faq,
               onTap: () {},
             ),
             const Divider(height: 1, indent: 56),
-            buildListTile(
+            buildListTile(context,
               icon: Icons.headset_mic_outlined,
               title: local.contact_support,
               onTap: () {},
             ),
             const Divider(height: 1, indent: 56),
-            buildListTile(
+            buildListTile(context,
               icon: Icons.privacy_tip_outlined,
               title: local.privacy_policy,
               onTap: () {},

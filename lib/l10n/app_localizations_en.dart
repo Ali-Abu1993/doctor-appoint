@@ -228,4 +228,187 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get err_accept_terms => 'Please accept terms and conditions';
+
+  @override
+  String get profile_title => 'Profile';
+
+  @override
+  String get edit_profile_title => 'Edit profile';
+
+  @override
+  String member_since(String year) {
+    return 'Member since $year';
+  }
+
+  @override
+  String get change_profile_photo => 'change profile photo';
+
+  @override
+  String get update_profile => 'Update profile';
+
+  @override
+  String get updating => 'Updating...';
+
+  @override
+  String get edit_your_profile => 'Edit your profile';
+
+  @override
+  String get profile_updated_success => 'Profile updated successfully';
+
+  @override
+  String get image_updated_success => 'Image updated successfully';
+
+  @override
+  String get default_user_name => 'User';
+
+  @override
+  String get default_email => 'noemail@nodomain.com';
+
+  @override
+  String get default_phone => '+01 000 0000 0000';
+
+  @override
+  String get not_specified => 'Not Specified';
+
+  @override
+  String get home_icon => 'Home';
+
+  @override
+  String get search_icon => 'Search';
+
+  @override
+  String get booking_icon => 'Booking';
+
+  @override
+  String get available_today => 'Available Today';
+
+  @override
+  String get not_available_today => 'Not Available Today';
+
+  @override
+  String reviews_format(String count) {
+    return '($count reviews)';
+  }
+
+  @override
+  String get view_profile => 'View Profile';
+
+  @override
+  String get book_now => 'Book Now';
+
+  @override
+  String get good_morning => 'Good Morning!';
+
+  @override
+  String get good_afternoon => 'Good Afternoon!';
+
+  @override
+  String get good_evening => 'Good Evening!';
+
+  @override
+  String hello_user(String name) {
+    return 'Hello, $name!';
+  }
+
+  @override
+  String get search_hint => 'Search doctors, specialties, clinics...';
+
+  @override
+  String get specialities => 'Specialities';
+
+  @override
+  String get see_all => 'see all';
+
+  @override
+  String get recommended_doctors => 'Recommended Doctors';
+
+  @override
+  String get view_all => 'view all';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get booking_confirmed_notification =>
+      'Your appointment with the doctor has been confirmed';
+
+  @override
+  String get new_promotions_notification => 'New promotions for medical plans';
+
+  @override
+  String get doc_app_title => 'Home';
+
+  @override
+  String get doctor_details_title => 'Doctor Details';
+
+  @override
+  String get about => 'About';
+
+  @override
+  String languages_format(String languages) {
+    return 'Languages: $languages';
+  }
+
+  @override
+  String address_format(String address) {
+    return 'Address is \'$address\'';
+  }
+
+  @override
+  String available_between_format(String time) {
+    return 'Available between: $time';
+  }
+
+  @override
+  String get select_date => 'Select Date';
+
+  @override
+  String get choose_date => 'choose date';
+
+  @override
+  String get available_time => 'Available Time';
+
+  @override
+  String get morning => 'Morning';
+
+  @override
+  String get evening => 'Evening';
+
+  @override
+  String get booking_completed => 'Booking is completed';
+
+  @override
+  String get confirm_appointment => 'Confirm appointment';
+
+  @override
+  String get please_select_time_slot => 'Please select a time slot';
+
+  @override
+  String get find_a_doctor => 'Find a Doctor';
+
+  @override
+  String filters_count(String count) {
+    return 'Filters ($count)';
+  }
+
+  @override
+  String get rating_filter => 'Rating 4.5+';
+
+  @override
+  String get distance_filter => 'Distance: < 5mi';
+
+  @override
+  String get speciality_title_1 => 'Cardiology';
+
+  @override
+  String get speciality_title_2 => 'Dental';
+
+  @override
+  String get speciality_title_3 => 'General';
+
+  @override
+  String get speciality_title_4 => 'Endocrinology';
 }

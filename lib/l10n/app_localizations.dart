@@ -529,6 +529,342 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please accept terms and conditions'**
   String get err_accept_terms;
+
+  /// No description provided for @profile_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile_title;
+
+  /// No description provided for @edit_profile_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get edit_profile_title;
+
+  /// No description provided for @member_since.
+  ///
+  /// In en, this message translates to:
+  /// **'Member since {year}'**
+  String member_since(String year);
+
+  /// No description provided for @change_profile_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'change profile photo'**
+  String get change_profile_photo;
+
+  /// No description provided for @update_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Update profile'**
+  String get update_profile;
+
+  /// No description provided for @updating.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating...'**
+  String get updating;
+
+  /// No description provided for @edit_your_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit your profile'**
+  String get edit_your_profile;
+
+  /// No description provided for @profile_updated_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully'**
+  String get profile_updated_success;
+
+  /// No description provided for @image_updated_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Image updated successfully'**
+  String get image_updated_success;
+
+  /// No description provided for @default_user_name.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get default_user_name;
+
+  /// No description provided for @default_email.
+  ///
+  /// In en, this message translates to:
+  /// **'noemail@nodomain.com'**
+  String get default_email;
+
+  /// No description provided for @default_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'+01 000 0000 0000'**
+  String get default_phone;
+
+  /// No description provided for @not_specified.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Specified'**
+  String get not_specified;
+
+  /// No description provided for @home_icon.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home_icon;
+
+  /// No description provided for @search_icon.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search_icon;
+
+  /// No description provided for @booking_icon.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking'**
+  String get booking_icon;
+
+  /// No description provided for @available_today.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Today'**
+  String get available_today;
+
+  /// No description provided for @not_available_today.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Available Today'**
+  String get not_available_today;
+
+  /// No description provided for @reviews_format.
+  ///
+  /// In en, this message translates to:
+  /// **'({count} reviews)'**
+  String reviews_format(String count);
+
+  /// No description provided for @view_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'View Profile'**
+  String get view_profile;
+
+  /// No description provided for @book_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Book Now'**
+  String get book_now;
+
+  /// No description provided for @good_morning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Morning!'**
+  String get good_morning;
+
+  /// No description provided for @good_afternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Afternoon!'**
+  String get good_afternoon;
+
+  /// No description provided for @good_evening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Evening!'**
+  String get good_evening;
+
+  /// No description provided for @hello_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello, {name}!'**
+  String hello_user(String name);
+
+  /// No description provided for @search_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search doctors, specialties, clinics...'**
+  String get search_hint;
+
+  /// No description provided for @specialities.
+  ///
+  /// In en, this message translates to:
+  /// **'Specialities'**
+  String get specialities;
+
+  /// No description provided for @see_all.
+  ///
+  /// In en, this message translates to:
+  /// **'see all'**
+  String get see_all;
+
+  /// No description provided for @recommended_doctors.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended Doctors'**
+  String get recommended_doctors;
+
+  /// No description provided for @view_all.
+  ///
+  /// In en, this message translates to:
+  /// **'view all'**
+  String get view_all;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @booking_confirmed_notification.
+  ///
+  /// In en, this message translates to:
+  /// **'Your appointment with the doctor has been confirmed'**
+  String get booking_confirmed_notification;
+
+  /// No description provided for @new_promotions_notification.
+  ///
+  /// In en, this message translates to:
+  /// **'New promotions for medical plans'**
+  String get new_promotions_notification;
+
+  /// No description provided for @doc_app_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get doc_app_title;
+
+  /// No description provided for @doctor_details_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor Details'**
+  String get doctor_details_title;
+
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// No description provided for @languages_format.
+  ///
+  /// In en, this message translates to:
+  /// **'Languages: {languages}'**
+  String languages_format(String languages);
+
+  /// No description provided for @address_format.
+  ///
+  /// In en, this message translates to:
+  /// **'Address is \'{address}\''**
+  String address_format(String address);
+
+  /// No description provided for @available_between_format.
+  ///
+  /// In en, this message translates to:
+  /// **'Available between: {time}'**
+  String available_between_format(String time);
+
+  /// No description provided for @select_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Date'**
+  String get select_date;
+
+  /// No description provided for @choose_date.
+  ///
+  /// In en, this message translates to:
+  /// **'choose date'**
+  String get choose_date;
+
+  /// No description provided for @available_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Time'**
+  String get available_time;
+
+  /// No description provided for @morning.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get morning;
+
+  /// No description provided for @evening.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening'**
+  String get evening;
+
+  /// No description provided for @booking_completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking is completed'**
+  String get booking_completed;
+
+  /// No description provided for @confirm_appointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm appointment'**
+  String get confirm_appointment;
+
+  /// No description provided for @please_select_time_slot.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a time slot'**
+  String get please_select_time_slot;
+
+  /// No description provided for @find_a_doctor.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a Doctor'**
+  String get find_a_doctor;
+
+  /// No description provided for @filters_count.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters ({count})'**
+  String filters_count(String count);
+
+  /// No description provided for @rating_filter.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating 4.5+'**
+  String get rating_filter;
+
+  /// No description provided for @distance_filter.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance: < 5mi'**
+  String get distance_filter;
+
+  /// No description provided for @speciality_title_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Cardiology'**
+  String get speciality_title_1;
+
+  /// No description provided for @speciality_title_2.
+  ///
+  /// In en, this message translates to:
+  /// **'Dental'**
+  String get speciality_title_2;
+
+  /// No description provided for @speciality_title_3.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get speciality_title_3;
+
+  /// No description provided for @speciality_title_4.
+  ///
+  /// In en, this message translates to:
+  /// **'Endocrinology'**
+  String get speciality_title_4;
 }
 
 class _AppLocalizationsDelegate

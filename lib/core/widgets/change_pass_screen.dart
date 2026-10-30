@@ -59,7 +59,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 2,
           children: [
-            buildSectionTitle('Change Password',style: TxtStyle.font14BoldBlue),
+            buildSectionTitle('Change Password',TxtStyle.font14BoldBlue),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               child:  CustomTextField(
@@ -95,7 +95,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                 prefixIcon: Icons.lock,
               ),
             ),
-            buildSectionTitle('Confirm new password',style: TxtStyle.font14BoldBlue),
+            buildSectionTitle('Confirm new password', TxtStyle.font14BoldBlue ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               child:  CustomTextField(

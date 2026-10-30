@@ -227,4 +227,186 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get err_accept_terms => 'الرجاء قبول الشروط والأحكام';
+
+  @override
+  String get profile_title => 'الملف الشخصي';
+
+  @override
+  String get edit_profile_title => 'تعديل الملف الشخصي';
+
+  @override
+  String member_since(String year) {
+    return 'عضو منذ $year';
+  }
+
+  @override
+  String get change_profile_photo => 'تغيير صورة الملف الشخصي';
+
+  @override
+  String get update_profile => 'تحديث الملف الشخصي';
+
+  @override
+  String get updating => 'جاري التحديث...';
+
+  @override
+  String get edit_your_profile => 'تعديل ملفك الشخصي';
+
+  @override
+  String get profile_updated_success => 'تم تحديث الملف الشخصي بنجاح';
+
+  @override
+  String get image_updated_success => 'تم تحديث الصورة بنجاح';
+
+  @override
+  String get default_user_name => 'مستخدم';
+
+  @override
+  String get default_email => 'noemail@nodomain.com';
+
+  @override
+  String get default_phone => '+01 000 0000 0000';
+
+  @override
+  String get not_specified => 'غير محدد';
+
+  @override
+  String get home_icon => 'الرئيسية';
+
+  @override
+  String get search_icon => 'البحث';
+
+  @override
+  String get booking_icon => 'حجز';
+
+  @override
+  String get available_today => 'متاح اليوم';
+
+  @override
+  String get not_available_today => 'غير متاح اليوم';
+
+  @override
+  String reviews_format(String count) {
+    return '($count تقييم)';
+  }
+
+  @override
+  String get view_profile => 'عرض الملف الشخصي';
+
+  @override
+  String get book_now => 'احجز الان';
+
+  @override
+  String get good_morning => 'صباح الخير!';
+
+  @override
+  String get good_afternoon => 'مساء الخير!';
+
+  @override
+  String get good_evening => 'مساء الخير!';
+
+  @override
+  String hello_user(String name) {
+    return 'أهلاً، $name!';
+  }
+
+  @override
+  String get search_hint => 'ابحث عن الأطباء، التخصصات، العيادات...';
+
+  @override
+  String get specialities => 'التخصصات';
+
+  @override
+  String get see_all => 'عرض الكل';
+
+  @override
+  String get recommended_doctors => 'الأطباء الموصى بهم';
+
+  @override
+  String get view_all => 'عرض الكل';
+
+  @override
+  String get settings => 'الإعدادات';
+
+  @override
+  String get profile => 'الملف الشخصي';
+
+  @override
+  String get booking_confirmed_notification => 'تم تأكيد موعد حجزك مع الدكتور';
+
+  @override
+  String get new_promotions_notification => 'عروض جديدة للخطط الطبية';
+
+  @override
+  String get doc_app_title => 'Home';
+
+  @override
+  String get doctor_details_title => 'تفاصيل الطبيب';
+
+  @override
+  String get about => 'نبذة عن الطبيب';
+
+  @override
+  String languages_format(String languages) {
+    return 'اللغات: $languages';
+  }
+
+  @override
+  String address_format(String address) {
+    return 'العنوان \'$address\'';
+  }
+
+  @override
+  String available_between_format(String time) {
+    return 'متاح بين: $time';
+  }
+
+  @override
+  String get select_date => 'اختر التاريخ';
+
+  @override
+  String get choose_date => 'اختر تاريخاً';
+
+  @override
+  String get available_time => 'الأوقات المتاحة';
+
+  @override
+  String get morning => 'صباحاً';
+
+  @override
+  String get evening => 'مساءً';
+
+  @override
+  String get booking_completed => 'تم الحجز بنجاح';
+
+  @override
+  String get confirm_appointment => 'تأكيد الموعد';
+
+  @override
+  String get please_select_time_slot => 'الرجاء اختيار وقت الحجز';
+
+  @override
+  String get find_a_doctor => 'البحث عن طبيب';
+
+  @override
+  String filters_count(String count) {
+    return 'الفلاتر ($count)';
+  }
+
+  @override
+  String get rating_filter => 'التقييم 4.5+';
+
+  @override
+  String get distance_filter => 'المسافة: أقل من 5 أميال';
+
+  @override
+  String get speciality_title_1 => 'أمراض القلب';
+
+  @override
+  String get speciality_title_2 => 'الأسنان';
+
+  @override
+  String get speciality_title_3 => 'عام';
+
+  @override
+  String get speciality_title_4 => 'إخصائي الغدد الصماء';
 }

@@ -1,13 +1,14 @@
+import 'package:doctor_appointment/core/utils/app_extensions.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/colors_manager.dart';
 import '../../utils/text_style.dart';
  const Color primaryBlue = ColorsManager.primary;
  const Color lightBlueBg = Color(0xFFE3F2FD);
-Widget buildSettingsGroup(List<Widget> children) {
+Widget buildSettingsGroup(List<Widget> children,[BuildContext? context]) {
   return Container(
     decoration: BoxDecoration(
-      color: Colors.white,
+      color: context?.colorTheme.secondary,
       borderRadius: BorderRadius.circular(16),
       boxShadow: [
         BoxShadow(
@@ -21,7 +22,7 @@ Widget buildSettingsGroup(List<Widget> children) {
   );
 }
 
-Widget buildListTile({
+Widget buildListTile(BuildContext context,{
   required IconData icon,
   required String title,
   String? subtitle,
@@ -35,14 +36,14 @@ Widget buildListTile({
     leading: Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: lightBlueBg,
+        color: Color(0xFFE3F2FD),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Icon(icon, color: primaryBlue, size: 22),
+      child: Icon(icon, color: ColorsManager.primary, size: 22),
     ),
     title: Text(
       title,
-      style:  TxtStyle.font15W600Black,
+      style:  TxtStyle.font15W600Black(context),
     ),
     subtitle: subtitle != null
         ? Text(subtitle, style: TxtStyle.font12NormalGrey)
@@ -56,12 +57,13 @@ Widget buildListTile({
             style: TxtStyle.font14BoldBlue
           ),
         const SizedBox(width: 4),
-        const Icon(Icons.arrow_forward_ios_rounded, size: 16, color: Colors.grey),
+         Icon(Icons.arrow_forward_ios_rounded, size: 16,
+            color: context.isDark? Colors.grey: Colors.white),
       ],
     ),
   );
 }
-Widget buildSwitchTile({
+Widget buildSwitchTile(BuildContext context,{
   required IconData icon,
   required String title,
   required bool value,
@@ -72,17 +74,17 @@ Widget buildSwitchTile({
     leading: Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: lightBlueBg,
+        color: Color(0xFFE3F2FD),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Icon(icon, color: primaryBlue, size: 22),
+      child: Icon(icon, color: ColorsManager.primary, size: 22),
     ),
     title: Text(
         title,
-        style: TxtStyle.font15W600Black),
+        style: TxtStyle.font15W600Black(context)),
     trailing: Switch.adaptive(
       value: value,
-      activeColor: primaryBlue,
+      activeColor: ColorsManager.primary,
       onChanged: onChanged,
     ),
   );

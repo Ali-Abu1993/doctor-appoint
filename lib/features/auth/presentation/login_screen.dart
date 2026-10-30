@@ -1,4 +1,5 @@
 import 'package:doctor_appointment/core/routing/routes.dart';
+import 'package:doctor_appointment/core/utils/app_extensions.dart';
 import 'package:doctor_appointment/core/utils/colors_manager.dart';
 import 'package:doctor_appointment/core/widgets/app_button.dart';
 import 'package:doctor_appointment/core/widgets/app_text_field.dart';
@@ -45,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
   @override
   Widget build(BuildContext context) {
+     late AppLocalizations? local = AppLocalizations.of(context);
     return BlocProvider(
   create: (context) => AuthCubit(),
   child: BlocConsumer<AuthCubit, AuthStates>(
@@ -52,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (state is AuthSuccessState){
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("You signed in successfully"),
+        content: Text(AppLocalizations.of(context)!.login_success),
         backgroundColor: ColorsManager.primary,
         behavior: SnackBarBehavior.floating,
       ),
@@ -63,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(state.em),
-          backgroundColor: Colors.redAccent,
+          backgroundColor: context.colorTheme.error,
           behavior: SnackBarBehavior.floating,
         ),
 
@@ -121,10 +123,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
                       if(value.isEmpty){
-                        return"Please enter your email address";
+                        return local!.err_enter_email;
                       }
                       else if(!emailRegex.hasMatch(value)){
-                        return"Please enter a valid email address";
+                        return local!.err_valid_email;
                       }
                       return null;
                     },),
@@ -166,14 +168,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       RegExp regex = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
                       if(value.isEmpty){
-                        return"Please enter your password";
+                        return local!.err_enter_password;
                       }
                       else if(value.length<8){
-                        return "Password must contain uppercase, lowercase, numbers, and special characters";}
+                        return local!.err_password_spec;}
 
 
                       else if(!regex.hasMatch(value)){
-                        return"Password must contain uppercase, lowercase, numbers, and special characters";
+                        return local!.err_password_spec;
                       }return null;
 
                     },
@@ -215,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: const EdgeInsets.only(right: 15),
                     child: AppButton(barWidth: double.infinity, txt:(state is AuthLoadingState)?
-                       "Loading..." :"Sign in",
+                       local!.loading :local!.sign_in,
                           onPress: (){
 
                         context.read<AuthCubit>().login(LoginRequestBody(
@@ -230,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Image.asset("assets/images_and_icons/Line 1.png", width: 100,height: 10,
                         color:Colors.grey ,),
                       SizedBox(width: 20,),
-                      Text("Or continue with",style: TextStyle(
+                      Text(local.or_continue_with,style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
                         color: Color.fromRGBO(114, 119, 131, 1)
@@ -274,17 +276,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       },
                           containerWidth: 150, containerHeight: 48, borderColor: Colors.blueGrey,
-                          textColor: Colors.black, body: "Apple", fontWeight: FontWeight.w600),
+                          textColor: Colors.black, body: local.apple, fontWeight: FontWeight.w600),
                     ],
                   ),
                   SizedBox(height: 35,),
                   Center(
                     child: Text.rich(TextSpan(
-                      text: "Don't have an account? ",
+                      text: local.dont_have_account,
                       style: TextStyle(color: Colors.black54, fontSize: 13),
                       children: [
                         TextSpan(
-                            text: "Create one here ",
+                            text: local.create_one_here,
                             style: TextStyle(
                               color: ColorsManager.primary,
                               fontWeight: FontWeight.bold,

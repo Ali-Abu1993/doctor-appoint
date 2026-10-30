@@ -28,8 +28,8 @@ class SearchWidgetState extends State<SearchWidget> {
       create: (context) => MockAllDoctorsCubit(),
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         
-        value: SystemUiOverlayStyle.dark.copyWith(
-          statusBarColor: Colors.white,
+        value: SystemUiOverlayStyle(
+          statusBarColor: ColorsManager.primary,
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.light,
         ),
@@ -38,11 +38,12 @@ class SearchWidgetState extends State<SearchWidget> {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(80),
               child: AppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarBrightness: Brightness.light,
-                  statusBarColor: ColorsManager.primary,
-
-                ),
+                // systemOverlayStyle: SystemUiOverlayStyle(
+                //   statusBarBrightness: Brightness.dark,
+                //   statusBarColor: ColorsManager.primary,
+                //   statusBarIconBrightness: Brightness.light
+                //
+                // ),
 
                 leadingWidth: double.infinity,
                 elevation: 5,

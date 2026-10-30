@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 import '../utils/colors_manager.dart';
 
 class AvailableTime extends StatefulWidget {
-  const AvailableTime({super.key,required this.timeSlots});
+  const AvailableTime({super.key,required this.timeSlots, this.onTimeSelected, this.selectedTime});
 final List timeSlots;
+final String? selectedTime;
+final void Function(String time)? onTimeSelected;
   @override
   State<AvailableTime> createState() => _AvailableTimeState();
 }
 
 class _AvailableTimeState extends State<AvailableTime> {
-  int selectedTimeIndex=-1;
+  // int selectedTimeIndex=-1;
   // bool isDisabled=true;
+
   @override
   Widget build(BuildContext context) {
     return  GridView.builder(
@@ -26,14 +29,19 @@ class _AvailableTimeState extends State<AvailableTime> {
         itemCount: widget.timeSlots.length,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context,index){
-          bool isSelected=index==selectedTimeIndex;
+          final currentSlotTime = widget.timeSlots[index].toString();
+          bool isSelected=currentSlotTime==widget.selectedTime;
           bool isDisabled = index==2;
 
+          bool isAnySelected= widget.selectedTime!=null;
+          bool isGreyedOut = isAnySelected && !isSelected;
+
           return  InkWell(
-            onTap:isDisabled? null :(){
-              setState(() {
-                selectedTimeIndex=index;
-              });
+            onTap:(isDisabled)? null :(){
+
+              if(widget.onTimeSelected != null){
+                widget.onTimeSelected!(currentSlotTime);
+              }
 
             },
             child: Container(
@@ -43,17 +51,16 @@ class _AvailableTimeState extends State<AvailableTime> {
               decoration: BoxDecoration(
                   borderRadius:BorderRadius.circular(8),
                   border: BoxBorder.all(
-                    color: isDisabled? Colors.grey.shade50:
+                    color: (isDisabled || isGreyedOut)? Colors.grey.shade300:
                     (isSelected? Color.fromRGBO(0, 94, 184, 0.1): ColorsManager.white)
                   ),
-                  color:isDisabled? Colors.grey.shade50:
+                  color:(isDisabled || isGreyedOut)? Colors.grey.shade200:
                   (isSelected? Color.fromRGBO(0, 94, 184, 0.1): ColorsManager.white)
               ),
               child: Center(
-                child: Text(widget.timeSlots[index],
-                  style: isDisabled? TextStyle(
+                child: Text(currentSlotTime,
+                  style: (isDisabled || isGreyedOut)? TextStyle(
                     color: Colors.grey.shade500,
-                    decoration: TextDecoration.lineThrough,
                     fontSize: 14
                   ):TxtStyle.font14SemiBold.copyWith(
                     color: isSelected? ColorsManager.primary: Colors.black,

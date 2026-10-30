@@ -1,4 +1,5 @@
 import 'package:doctor_appointment/core/routing/routes.dart';
+import 'package:doctor_appointment/core/utils/app_extensions.dart';
 import 'package:doctor_appointment/core/widgets/app_button.dart';
 import 'package:doctor_appointment/core/widgets/app_text_field.dart';
 import 'package:doctor_appointment/features/auth/data/register_body.dart';
@@ -53,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           if (state is AuthSuccessState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text("You signed up successfully"),
+                content: Text(context.l1on.signup_success),
                 backgroundColor: ColorsManager.primary,
                 behavior: SnackBarBehavior.floating,
               ),
@@ -85,7 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                       children: [
                         Text(
-                          "Create an account",
+                          context.l1on.create_an_account,
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 26,
@@ -95,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(height: 10),
 
                         Text(
-                          "Fill in your details to get started\n with DocPoint.",
+                          context.l1on.register_subtitle,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 16,
@@ -104,7 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         SizedBox(height: 30),
                         Text(
-                          "Full name",
+                          context.l1on.full_name,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 14,
@@ -113,19 +114,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         SizedBox(height: 5),
                         CustomTextField(
-                          hintText: "e.g. Jane Doe",
+                          hintText: context.l1on.name_hint,
                           controller: nameController,
                           textInput: (val) {
 
                             if (val ==null || val.isEmpty) {
-                              return "please enter your name";
+                              return context.l1on.err_enter_name;
                             }
                             return null;
                           },
                         ),
                         SizedBox(height: 10),
                         Text(
-                          "Gender",
+                          context.l1on.gender,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 14,
@@ -137,7 +138,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           children: [
                             Expanded(
                               child: RadioListTile<String>(
-                                title: const Text("Male"),
+                                title: Text(context.l1on.male),
                                 value: "1",
                                 groupValue: genderController.text,
                                 onChanged: (String? val) => setState(() => genderController.text = val!),
@@ -145,7 +146,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             Expanded(
                               child: RadioListTile<String>(
-                                title: const Text("Female"),
+                                title:  Text(context.l1on.female),
                                 value: "0",
                                 groupValue: genderController.text,
                                 onChanged: (val) => setState(() => genderController.text = val!),
@@ -157,7 +158,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(height: 10),
 
                         Text(
-                          "Email Address",
+                          context.l1on.email_address,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 14,
@@ -166,7 +167,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         SizedBox(height: 10),
                         CustomTextField(
-                          hintText: "jane@example.com",
+                          hintText: context.l1on.email_hint,
                           controller: emailController,
                           prefixIcon: Icons.email_outlined,
                           keyboardType: TextInputType.emailAddress,
@@ -175,16 +176,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                             );
                             if (value ==null || value.isEmpty) {
-                              return "Please enter your email address";
+                              return context.l1on.err_enter_email;
                             } else if (!emailRegex.hasMatch(value)) {
-                              return "Please enter a valid email address";
+                              return context.l1on.err_valid_email;
                             }
                             return null;
                           },
                         ),
                         SizedBox(height: 13),
                         Text(
-                          "Phone Number",
+                          context.l1on.phone_number,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 14,
@@ -193,20 +194,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         SizedBox(height: 5),
                         CustomTextField(
-                          hintText: "(555) 000-0000",
+                          hintText: context.l1on.phone_hint,
                           controller: phoneController,
                           prefixIcon: Icons.phone,
                           textInput: (val) {
                             RegExp phoneRegex = RegExp(r'^01[0125][0-9]{8}$');
                             if (val == null || val.isEmpty) {
-                              return "Please enter your phone number";
+                              return context.l1on.err_enter_phone;
                             }else if (val.length !=11)
                               {
-                                return "Phone number must be 11 digits";
+                                return context.l1on.err_phone_digits;
                               }
 
                             else if (!phoneRegex.hasMatch(val)) {
-                              return "Please enter a valid  phone number";
+                              return context.l1on.err_valid_phone;
                             }
                             return null;
                           },
@@ -215,7 +216,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(height: 10),
 
                         Text(
-                          "Password",
+                          context.l1on.password,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 14,
@@ -224,7 +225,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         SizedBox(height: 5),
                         CustomTextField(
-                          hintText: "Create a strong password",
+                          hintText: context.l1on.create_strong_password,
                           controller: passwordController,
                           textInput: (value) {
 
@@ -258,7 +259,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(height: 10),
 
                         Text(
-                          "Confirm Password",
+                          context.l1on.confirm_password,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 14,
@@ -320,14 +321,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Expanded(
                               child: Text.rich(
                                 TextSpan(
-                                  text: "I agree to the ",
+                                  text: context.l1on.i_agree_to,
                                   style: const TextStyle(
                                     color: Colors.black54,
                                     fontSize: 13,
                                   ),
                                   children: [
                                     TextSpan(
-                                      text: "Terms of Service ",
+                                      text: context.l1on.terms_of_service,
                                       style: const TextStyle(
                                         color: ColorsManager.primary,
                                         fontWeight: FontWeight.bold,
@@ -335,9 +336,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       recognizer: tapGestureRecognizer
                                         ..onTap = () {},
                                     ),
-                                    const TextSpan(text: "and "),
-                                    const TextSpan(
-                                      text: "Privacy Policy.",
+                                     TextSpan(text: context.l1on.and),
+                                     TextSpan(
+                                      text: context.l1on.privacy_policy,
                                       style: TextStyle(
                                         color: ColorsManager.primary,
                                         fontWeight: FontWeight.bold,
@@ -359,8 +360,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: AppButton(
                             barWidth: double.infinity,
                             txt: (state is AuthLoadingState)
-                                ? "Loading..."
-                                : "Create Account",
+                                ? context.l1on.loading
+                                : context.l1on.create_account_btn,
                             onPress: () {
                               if (!isChecked){
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -392,8 +393,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
-                              "Already have an account? ",
+                             Text(
+                              context.l1on.already_have_account,
                               style: TextStyle(color: Colors.black54),
                             ),
                             GestureDetector(
@@ -401,8 +402,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 // انقل لصفحة الـ Login
                                 context.go(AppRouter.kLoginScreen);
                               },
-                              child: const Text(
-                                "Log in",
+                              child:  Text(
+                                context.l1on.log_in,
                                 style: TextStyle(
                                   color: ColorsManager.primary,
                                   fontWeight: FontWeight.bold,

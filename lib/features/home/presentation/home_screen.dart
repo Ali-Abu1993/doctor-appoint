@@ -1,10 +1,10 @@
 import 'package:doctor_appointment/core/helper/debounce.dart';
-import 'package:doctor_appointment/core/mock_data/data/all_doctors_mock_data.dart';
 import 'package:doctor_appointment/core/mock_data/logic/mock_all_doctors_cubit.dart';
 import 'package:doctor_appointment/core/mock_data/logic/mock_home_cubit.dart';
 import 'package:doctor_appointment/core/notifications/request_permision.dart';
 import 'package:doctor_appointment/core/routing/navigation_cubit.dart';
 import 'package:doctor_appointment/core/routing/routes.dart';
+import 'package:doctor_appointment/core/utils/app_extensions.dart';
 import 'package:doctor_appointment/core/utils/colors_manager.dart';
 import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/core/widgets/app_text_field.dart';
@@ -24,7 +24,7 @@ import 'package:go_router/go_router.dart';
 import '../data/doctors_model.dart';
 
 class HomeScreen extends StatefulWidget {
-   HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -35,14 +35,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final debounce = Debounce();
 
-String getGreeting(){
+String getGreeting(BuildContext context){
   final hour =DateTime.now().hour;
+  final local = context.l1on;
   if (hour<12 ){
-    return 'Good Morning!';
+    return local.good_morning;
   } else if(hour<17){
-    return 'Good Afternoon!';
+    return local.good_afternoon;
   } else {
-    return 'Good Evening!';
+    return local.good_evening;
   }
 }
 @override
@@ -60,7 +61,10 @@ String getGreeting(){
 
   @override
   Widget build(BuildContext context) {
-  final String greeting = getGreeting();
+  final String greeting = getGreeting(context);
+  final isDark = context.isDark;
+  final local = context.l1on;
+  // bool isArabic = false;
   final user= FirebaseAuth.instance.currentUser;
   final String? photoUrl = user?.photoURL;
   final userName = user?.displayName ?? user?.email?.split("@")[0] ?? 'user';
@@ -110,12 +114,12 @@ String getGreeting(){
                       onTap: (){
                     context.pushNamed(AppRouter.kSettingsScreen);
                       },
-                      child: Text('Settings')),
+                      child: Text(local.settings)),
                   PopupMenuItem(value: 2,
                        onTap: ()=>context.pushNamed(AppRouter.kProfileScreen),
-                      child: Text('Profile')),
+                      child: Text(local.profile)),
                   PopupMenuItem(value: 3,
-                      child: Text('Logout'),
+                      child: Text(local.logout),
                   onTap: (){context.read<AuthCubit>().signOut();}
                     ,)
 
@@ -129,14 +133,19 @@ String getGreeting(){
 ),
             ),
           ),
-          title: Text("DocPoint", style: TxtStyle.font20W700Blue),
+          title: Text(local.doc_app_title,
+              style: isDark? TxtStyle.font18SemiBoldWhite:TxtStyle.font18SemiBold(context)),
           systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: ColorsManager.primary
+            statusBarColor: ColorsManager.white,
+            statusBarBrightness: Brightness.light,
+            statusBarIconBrightness: Brightness.light
           ),
+          backgroundColor: isDark? ColorsManager.primary:Colors.black12,
           centerTitle: true,
           actions: [
             PopupMenuButton(
-              icon: const Icon(Icons.notifications_none_outlined, color: ColorsManager.primary
+              icon:  Icon(Icons.notifications_none_outlined,
+                color: Colors.white70
                 ,size: 28,),
                 offset: const Offset(0, 50),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(12)),
@@ -162,7 +171,8 @@ String getGreeting(){
                     children: [
                       Icon(Icons.circle,size: 10, color: Colors.redAccent,),
                       SizedBox(width: 8,),
-                      Expanded(child: Text("New promotions for medical plans",overflow: TextOverflow.visible,))
+                      Expanded(child: Text(local.new_promotions_notification
+                        ,overflow: TextOverflow.visible,))
                     ],
                   ))
                 ])
@@ -178,16 +188,29 @@ String getGreeting(){
                   SizedBox(height: 5,),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(greeting, style: TxtStyle.font12W500),
+                    child: Text(greeting,
+                        style: isDark? TxtStyle.font12W500:TxtStyle.font12W500White),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text("Hello, $userName!", style: TxtStyle.font18SemiBold),
+                    child: Text(local.hello_user(userName) ,
+                        style: TxtStyle.font18SemiBold(context)),
                   ),
                   SizedBox(height: 25),
                   Center(
                     child: CustomTextField(
-                      hintText: 'Search doctors, specialties, clinics...',
+                      hintText: local.search_hint,
+                      decoration:InputDecoration(disabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color:Colors.white,
+                        ),
+                      ),
+                        focusedBorder:OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color:Colors.white,
+                          ),
+                        ) ,
+                      ) ,
                       controller: searchController,
                       textInput: (value) {
                         return;
@@ -212,10 +235,10 @@ String getGreeting(){
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Specialities", style: TxtStyle.font18SemiBold),
+                        Text(local.specialities, style: TxtStyle.font18SemiBold(context)),
                         TextButton(
                           onPressed: () {},
-                          child: Text("see all", style: TxtStyle.font12W500),
+                          child: Text(local.see_all, style: TxtStyle.font12W500),
                         ),
                       ],
                     ),
@@ -227,12 +250,12 @@ String getGreeting(){
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Recommended Doctors", style: TxtStyle.font18SemiBold),
+                        Text(local.recommended_doctors, style: TxtStyle.font18SemiBold(context)),
                         TextButton(
                           onPressed: () {
                             context.pushNamed(AppRouter.kAllDoctorScreen);
                           },
-                          child: Text("view all", style: TxtStyle.font12W500),
+                          child: Text(local.view_all, style: TxtStyle.font12W500),
                         ),
                       ],
                     ),
@@ -282,7 +305,6 @@ String getGreeting(){
 
         bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
           builder: (context, state) {
-            final currentIndex1 = context.watch<NavigationCubit>().currentIndex;
             return MainLayout();
           },
         ),
