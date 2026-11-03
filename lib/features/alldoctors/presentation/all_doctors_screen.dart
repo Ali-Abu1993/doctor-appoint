@@ -8,6 +8,7 @@ import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/core/widgets/app_text_field.dart';
 import 'package:doctor_appointment/core/widgets/main_layout.dart';
 import 'package:doctor_appointment/features/alldoctors/logic/all_doctor_state.dart';
+import 'package:doctor_appointment/features/home/data/doctors_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -46,21 +47,21 @@ int selectedIndex =0;
             style:isDark? TxtStyle.font18SemiBoldWhite:TxtStyle.font18SemiBold(context)
           ),
           centerTitle: true,
-          backgroundColor: isDark? ColorsManager.primary:Colors.white,
+          backgroundColor: isDark? ColorsManager.primary:Colors.black12,
           actions: [
             InkWell(
               onTap: () {},
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Icon(Icons.notifications_none,
-                  color: isDark? Colors.white70:ColorsManager.primary,),
+                  color:  Colors.white70,),
               ),
             ),
           ],
           leading: IconButton(onPressed: (){
             context.pop();
           }, icon: Icon(Icons.arrow_back,
-          color: isDark? Colors.white70:ColorsManager.primary,)),
+          color: Colors.white70,)),
         ),
         body: SingleChildScrollView(
           child: Column(

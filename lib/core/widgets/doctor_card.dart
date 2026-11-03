@@ -1,7 +1,6 @@
 import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/core/widgets/app_button.dart';
 import 'package:doctor_appointment/features/alldoctors/logic/all_doctor_cubit.dart';
-import 'package:doctor_appointment/features/doctor_details/presentation/doctor_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -95,7 +94,7 @@ class _DoctorCardState extends State<DoctorCard> {
                           decoration: BoxDecoration(
                             color: widget.isAvailable ? (isDarkMode?
                                  const Color.fromRGBO(121, 242, 240, 0.3):
-                                 const Color.fromRGBO(121, 242, 240, 0.15)
+                                 const Color.fromRGBO(121, 242, 240, 0.10)
                             ) :  const Color.fromRGBO(255, 127, 127, 1),
 
                             // لون خلفية لبني خفيف جداً
@@ -258,19 +257,7 @@ class _DoctorCardState extends State<DoctorCard> {
                       txt: local.view_profile,
                       onPress: () {
                         context.pushNamed(AppRouter.kDoctorDetailScreen,
-                            extra: {
-                              'docImage': widget.photo,
-                              'docName': widget.doctorName,
-                              'docExperience': widget.doctorData.degree ?? "",
-                              'docDescription': widget.doctorData.description ?? "",
-                              'docSpeciality': widget.doctorData.specialization?.name ?? "",
-                              'docEmail': widget.doctorData.email ?? "",
-                              'docPhoneNumber': widget.doctorData.phone ?? "",
-                              'startTime': widget.doctorData.startTime ?? "",
-                              'endTime': widget.doctorData.endTime ?? "",
-                              'doctorAddress': widget.doctorData.address ?? "",
-                              'doctorIndex': widget.doctorIndex,
-                            });
+                            extra: widget.doctorIndex);
                       },
                       buttonColor: isDarkMode ?   Colors.white:const Color(0xFF1F1F1F),
                       buttonTxtStyle: isDarkMode? TxtStyle.font14W700:TextStyle(
@@ -288,26 +275,8 @@ class _DoctorCardState extends State<DoctorCard> {
     barWidth: 124.w,
         txt: local.book_now,
         onPress: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DoctorDetails(
-            docImage: widget.photo,
-            docName: widget.doctorName,
-            docDescription:
-            widget.doctorData.description ?? "",
-            docExperience: widget.doctorData.degree ?? "",
-            docSpeciality:
-            widget.doctorData.specialization.name ?? "",
-            docEmail: widget.doctorData.email ?? "",
-            docPhoneNumber: widget.doctorData.phone ?? "",
-            startTime: widget.doctorData.startTime ?? "",
-              endTime: widget.doctorData.endTime ?? "",
-            doctorAddress: widget.doctorData.address ?? "",doctorIndex: widget.doctorIndex,
-
-          ),
-        ),
-      );
+          context.pushNamed(AppRouter.kDoctorDetailScreen,
+              extra: widget.doctorIndex);
     },
     ),
     ),

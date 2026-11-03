@@ -1,5 +1,6 @@
 import 'package:doctor_appointment/core/helper/debounce.dart';
 import 'package:doctor_appointment/core/mock_data/logic/mock_all_doctors_cubit.dart';
+import 'package:doctor_appointment/core/utils/app_extensions.dart';
 import 'package:doctor_appointment/core/utils/colors_manager.dart';
 import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/core/widgets/app_text_field.dart';
@@ -28,9 +29,9 @@ class SearchWidgetState extends State<SearchWidget> {
       create: (context) => MockAllDoctorsCubit(),
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         
-        value: SystemUiOverlayStyle(
+        value: SystemUiOverlayStyle.light.copyWith(
           statusBarColor: ColorsManager.primary,
-          statusBarBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
           statusBarIconBrightness: Brightness.light,
         ),
         child: SafeArea(
@@ -51,7 +52,7 @@ class SearchWidgetState extends State<SearchWidget> {
                     child:  Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       child: CustomTextField(
-                        hintText: 'Search doctors, specialties, clinics...',
+                        hintText: context.l1on.search_hint,
                         hintStyle: TextStyle(
                           color: Colors.grey.shade100,
                           fontSize: 12,

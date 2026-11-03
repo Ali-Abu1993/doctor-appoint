@@ -2,10 +2,10 @@ import 'package:doctor_appointment/features/user_edit_profile/data/user_profile_
 
 abstract class UserProfileMockData {
   static UserProfileModel currentUser = const UserProfileModel(
-    fullName: "Sarah Connor",
-    email: "sarah.connor@example.com",
-    phoneNumber: "+20 101 234 5678",
-    gender: "Female",
+    fullName: "",
+    email: "",
+    phoneNumber: "",
+    gender: "",
   );
 
   static UserProfileModel updateProfile(UserProfileModel newProfile) {

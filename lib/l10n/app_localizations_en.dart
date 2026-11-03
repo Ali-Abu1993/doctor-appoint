@@ -105,6 +105,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get password => 'Password';
 
   @override
+  String get change_password => 'Change Password';
+
+  @override
+  String get change_password_success => 'Password is changed Successfully';
+
+  @override
+  String get confirm_password => 'Confirm Password';
+
+  @override
+  String get reset_password => 'Reset password';
+
+  @override
   String get password_hint => '••••••••';
 
   @override
@@ -164,9 +176,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get create_strong_password => 'Create a strong password';
-
-  @override
-  String get confirm_password => 'Confirm Password';
 
   @override
   String get confirm_password_hint => 'Confirm password';
@@ -330,6 +339,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profile => 'Profile';
+
+  @override
+  String get confirm_logout => 'Are you sure you want to log out?';
 
   @override
   String get booking_confirmed_notification =>

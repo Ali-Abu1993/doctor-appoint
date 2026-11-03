@@ -284,6 +284,30 @@ abstract class AppLocalizations {
   /// **'Password'**
   String get password;
 
+  /// No description provided for @change_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get change_password;
+
+  /// No description provided for @change_password_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is changed Successfully'**
+  String get change_password_success;
+
+  /// No description provided for @confirm_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirm_password;
+
+  /// No description provided for @reset_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset password'**
+  String get reset_password;
+
   /// No description provided for @password_hint.
   ///
   /// In en, this message translates to:
@@ -403,12 +427,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create a strong password'**
   String get create_strong_password;
-
-  /// No description provided for @confirm_password.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm Password'**
-  String get confirm_password;
 
   /// No description provided for @confirm_password_hint.
   ///
@@ -721,6 +739,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile'**
   String get profile;
+
+  /// No description provided for @confirm_logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out?'**
+  String get confirm_logout;
 
   /// No description provided for @booking_confirmed_notification.
   ///

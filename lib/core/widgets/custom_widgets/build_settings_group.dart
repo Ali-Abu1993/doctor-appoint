@@ -29,7 +29,7 @@ Widget buildListTile(BuildContext context,{
   String? trailingText,
   required VoidCallback onTap,
 }) {
-
+final isDark = context.isDark;
   return ListTile(
     onTap: onTap,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -46,7 +46,7 @@ Widget buildListTile(BuildContext context,{
       style:  TxtStyle.font15W600Black(context),
     ),
     subtitle: subtitle != null
-        ? Text(subtitle, style: TxtStyle.font12NormalGrey)
+        ? Text(subtitle, style:TxtStyle.font12NormalGrey,)
         : null,
     trailing: Row(
       mainAxisSize: MainAxisSize.min,
@@ -54,7 +54,7 @@ Widget buildListTile(BuildContext context,{
         if (trailingText != null)
           Text(
             trailingText,
-            style: TxtStyle.font14BoldBlue
+            style: isDark?TxtStyle.font14BoldBlue:TxtStyle.font14BoldGrey
           ),
         const SizedBox(width: 4),
          Icon(Icons.arrow_forward_ios_rounded, size: 16,
@@ -84,7 +84,7 @@ Widget buildSwitchTile(BuildContext context,{
         style: TxtStyle.font15W600Black(context)),
     trailing: Switch.adaptive(
       value: value,
-      activeColor: ColorsManager.primary,
+      activeColor: context.isDark?ColorsManager.primary:Colors.lightBlue,
       onChanged: onChanged,
     ),
   );

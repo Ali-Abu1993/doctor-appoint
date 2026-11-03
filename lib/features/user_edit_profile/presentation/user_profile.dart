@@ -4,14 +4,12 @@ import 'package:doctor_appointment/core/mock_data/logic/mock_profile_cubit.dart'
 import 'package:doctor_appointment/core/routing/navigation_cubit.dart';
 import 'package:doctor_appointment/core/routing/routes.dart';
 import 'package:doctor_appointment/core/utils/app_extensions.dart';
-import 'package:doctor_appointment/core/utils/colors_manager.dart';
 import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/core/widgets/app_button.dart';
 import 'package:doctor_appointment/core/widgets/custom_widgets/build_info_tile.dart';
 import 'package:doctor_appointment/core/widgets/main_layout.dart';
 import 'package:doctor_appointment/features/user_edit_profile/data/user_profile_model.dart';
 import 'package:doctor_appointment/features/user_edit_profile/logic/profile_cubit.dart';
-import 'package:doctor_appointment/l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +23,8 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late AppLocalizations local =context.l1on;
+    final local =context.l1on;
+    final isDark =context.isDark;
     
     return MultiBlocProvider(
   providers: [
@@ -98,7 +97,8 @@ class UserProfile extends StatelessWidget {
                         height: 293.h,
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(255, 255, 255, 1),
+                          color: isDark?Color.fromRGBO(255, 255, 255, 1)
+                              :Color.fromRGBO(121, 242, 240, 0.10),
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
@@ -115,16 +115,16 @@ class UserProfile extends StatelessWidget {
 
                             children: [
                           buildInfoTile(Icons.person_2_outlined, local.full_name, userName?.displayName ?? 'User',
-                          TxtStyle.font11BoldGrey,TxtStyle.font15W600DarkBlue),
+                          TxtStyle.font12NormalGrey,TxtStyle.font15W600Black(context)),
                               Divider(height: 24,),
                               buildInfoTile(Icons.email_outlined, local.email_address, userName?.email ?? 'noemail@nodomain.com',
-                              TxtStyle.font11BoldGrey, TxtStyle.font15W600DarkBlue),
+    TxtStyle.font12NormalGrey,TxtStyle.font15W600Black(context)),
                               Divider(height: 24,),
                               buildInfoTile(Icons.phone, local.phone_number, userName?.phoneNumber ?? '',
-                              TxtStyle.font11BoldGrey,TxtStyle.font15W600DarkBlue),
+    TxtStyle.font12NormalGrey,TxtStyle.font15W600Black(context)),
                               Divider(height: 24,),
                               buildInfoTile(Icons.transgender_outlined, local.gender, gender,
-                              TxtStyle.font11BoldGrey, TxtStyle.font15W600DarkBlue),
+    TxtStyle.font12NormalGrey,TxtStyle.font15W600Black(context)),
 
                         ]);
   },

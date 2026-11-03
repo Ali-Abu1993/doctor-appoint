@@ -1,4 +1,5 @@
 import 'package:doctor_appointment/core/helper/debounce.dart';
+import 'package:doctor_appointment/core/utils/app_extensions.dart';
 import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/core/widgets/app_button.dart';
 import 'package:doctor_appointment/core/widgets/custom_widgets/build_section_title.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../utils/colors_manager.dart';
 import 'app_text_field.dart';
@@ -35,6 +37,8 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    final local = context.l1on;
+    final isDark = context.isDark;
     return BlocProvider(
   create: (context) => AuthCubit(),
   child: Scaffold(
@@ -44,26 +48,29 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
             statusBarBrightness: Brightness.light,
             statusBarColor: ColorsManager.primary,
           ),
-
-          leadingWidth: double.infinity,
+leading: IconButton(onPressed: () {
+  context.pop();
+}, icon: Icon(Icons.arrow_back,
+    color: isDark? Colors.white70: Colors.white,)),
           elevation: 5,
-          title: Text('Change Password', style: TxtStyle.font14BoldBlue,),
+          title: Text(local.change_password, style: TxtStyle.font18SemiBoldWhite,),
           centerTitle: true,
-           backgroundColor: ColorsManager.white,
+           backgroundColor: isDark?ColorsManager.primary:Colors.black12,
 
         ),
 
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          key: formKey,
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 2,
           children: [
-            buildSectionTitle('Change Password',TxtStyle.font14BoldBlue),
+            buildSectionTitle(local.change_password,isDark?TxtStyle.font14BoldBlue:TxtStyle.font14SemiBoldWhite),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               child:  CustomTextField(
-                hintText: "Create a strong password",
+                hintText: local.create_strong_password,
                 controller: newPassController,
                 textInput: (value) {
 
@@ -71,11 +78,11 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                     r'^(?=.*[a-z])(?=.*[A-Z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
                   );
                   if (value ==null || value.isEmpty) {
-                    return "Please enter your password";
+                    return local.err_enter_password;
                   } else if (value.length < 8) {
-                    return "Password must contain uppercase, lowercase, numbers, and special characters";
+                    return local.err_password_spec;
                   } else if (!regex.hasMatch(value)) {
-                    return "Password must contain uppercase, lowercase, numbers, and special characters";
+                    return local.err_password_spec;
                   }
                   return null;
                 },
@@ -95,18 +102,26 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                 prefixIcon: Icons.lock,
               ),
             ),
-            buildSectionTitle('Confirm new password', TxtStyle.font14BoldBlue ),
+            buildSectionTitle(local.confirm_password, isDark?TxtStyle.font14BoldBlue:TxtStyle.font14SemiBoldWhite ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               child:  CustomTextField(
-                hintText: "Confirm password",
+                hintText: local.confirm_password,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: isDark? Colors.black12:Colors.white70,
+                    )
+                  ),
+                ),
                 controller: confirmPassController,
                 textInput: (value) {
                   if (value==null || value.isEmpty) {
-                    return "Please enter your password again";
+                    return local.err_enter_password_again;
                   } else if (confirmPassController.text.trim() !=
                       value) {
-                    return "please enter you password correctly";
+                    return local.err_password_match;
                   }
                   return null;
                 },
@@ -132,7 +147,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
   listener: (context, state) {
     if(state is AuthSuccessState){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Password is changed')));
+          content: Text(local.change_password_success)));
     }
     else if (state is AuthErrorState){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -140,7 +155,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
     }
   },
   child: Center(
-              child: AppButton(barWidth: 200.w, txt: 'Reset Password',
+              child: AppButton(barWidth: 200.w, txt: local.reset_password,
                   onPress: (){
                 if(formKey.currentState!.validate()){
                   context.read<AuthCubit>().login(LoginRequestBody(

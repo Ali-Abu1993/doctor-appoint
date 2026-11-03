@@ -1,4 +1,5 @@
 
+import 'package:doctor_appointment/core/constance/api_const.dart';
 import 'package:doctor_appointment/core/mock_data/data/all_doctors_mock_data.dart';
 import 'package:doctor_appointment/core/widgets/change_pass_screen.dart';
 import 'package:doctor_appointment/core/widgets/search_widget.dart';
@@ -80,42 +81,47 @@ abstract class AppRouter {
           final args = GoRouterState
               .of(context)
               .extra;
-          if (args != null) {
-            final extraData = state.extra as Map<String, dynamic>;
-            return DoctorDetails(
-                docImage: extraData['docImage'],
-                docName: extraData['docName'],
-                docExperience: extraData['docExperience'],
-                doctorIndex: extraData['doctorIndex'],
-                docDescription: extraData['docDescription'],
-                docSpeciality: extraData['docSpeciality'],
-                docEmail: extraData['docEmail'],
-                docPhoneNumber: extraData['docPhoneNumber'],
-                startTime: extraData['startTime'],
-                endTime: extraData['endTime'],
-                doctorAddress: extraData['doctorAddress']);
-          } else {
+
+          //   final  extraData = state.extra as Map<String,dynamic>;
+          // if (extraData != null && extraData.isNotEmpty) {
+             // return DoctorDetails(
+            //     docImage: extraData['docImage']?.toString() ?? '' ,
+            //     docName: extraData['docName']?.toString() ?? '' ,
+            //     docExperience: extraData['docExperience']?.toString() ?? '',
+            //     doctorIndex: extraData['doctorIndex']is int? extraData['doctorIndex']:0,
+            //     docDescription: extraData['docDescription']?.toString() ?? '',
+            //     docSpeciality: extraData['docSpeciality']?.toString() ?? '',
+            //     docEmail: extraData['docEmail']?.toString() ?? '',
+            //     docPhoneNumber: extraData['docPhoneNumber']?.toString() ?? '',
+            //     startTime: extraData['startTime']?.toString() ?? '',
+            //     endTime: extraData['endTime']?.toString() ?? '',
+            //     doctorAddress: extraData['doctorAddress']?.toString() ?? '');
+          // } else {
             // 🌟 هنا البديل: لو مفيش data مبعوثة، هنجيب بيانات الدكتور من الـ Mock Data مباشرة!
             // (بنفترض إن AllDoctorMockData.doctors دي هي اللستة بتاعتك، وبناخد أول دكتور كافتراضي [0])
-            final mockDoctor = AllDoctorsMockData.doctorsList[0];
+            final int? doctorIndex = state.extra as int?;
+            final selectedDoctor = (doctorIndex != null && doctorIndex < AllDoctorsMockData.doctorsList.length)
+                ? AllDoctorsMockData.doctorsList[doctorIndex]
+                : AllDoctorsMockData.doctorsList[0]; // كقيمة افتراضية لو حدث خطأ
 
             // أخيراً بنرجع الـ Widget ونمرر لها البيانات سواء كانت حقيقية أو من الـ Mock
             return DoctorDetails(
-              docName: mockDoctor.name!,
-              docEmail: mockDoctor.email!,
-              docPhoneNumber: mockDoctor.phone!,
-              docSpeciality: mockDoctor.specialization!.name!,
-              docImage: mockDoctor.photo!,
-              docExperience: mockDoctor.degree!,
-              startTime: mockDoctor.startTime!,
-              endTime: mockDoctor.endTime!,
-              doctorAddress: mockDoctor.address!,
-              docDescription: mockDoctor.description!,
-              docLanguage: '',
-              doctorIndex: mockDoctor.id!,
+              docName: selectedDoctor.name ?? '',
+              docEmail: selectedDoctor.email ?? '',
+              docPhoneNumber: selectedDoctor.phone ?? '',
+              docSpeciality: selectedDoctor.specialization?.name ?? '',
+              docImage: selectedDoctor.photo ?? '',
+              docExperience: selectedDoctor.degree ?? '',
+              startTime: selectedDoctor.startTime ?? '',
+              endTime: selectedDoctor.endTime ?? '',
+              doctorAddress: selectedDoctor.address ?? '',
+              docDescription: selectedDoctor.description ?? '',
+              docLanguage: 'English',
+              doctorIndex: selectedDoctor.id ?? 0,
             );
           }
-        })
+        // }
+        )
     ],
   );
 }

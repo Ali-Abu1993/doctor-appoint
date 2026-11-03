@@ -105,6 +105,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get password => 'كلمة المرور';
 
   @override
+  String get change_password => 'تغير كلمة المرور';
+
+  @override
+  String get change_password_success => 'تم تغير كلمة المرور بنجاح';
+
+  @override
+  String get confirm_password => 'تأكيد كلمة المرور';
+
+  @override
+  String get reset_password => 'إعادة تعيين كلمة المرور';
+
+  @override
   String get password_hint => '••••••••';
 
   @override
@@ -163,9 +175,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get create_strong_password => 'أنشئ كلمة مرور قوية';
-
-  @override
-  String get confirm_password => 'تأكيد كلمة المرور';
 
   @override
   String get confirm_password_hint => 'تأكيد كلمة المرور';
@@ -329,6 +338,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profile => 'الملف الشخصي';
+
+  @override
+  String get confirm_logout => 'هل تريد تسجيل الخروخ؟';
 
   @override
   String get booking_confirmed_notification => 'تم تأكيد موعد حجزك مع الدكتور';

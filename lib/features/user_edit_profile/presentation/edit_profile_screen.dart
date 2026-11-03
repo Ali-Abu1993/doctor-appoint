@@ -1,5 +1,6 @@
 import 'package:doctor_appointment/core/helper/dio_helper.dart';
 import 'package:doctor_appointment/core/mock_data/logic/mock_profile_cubit.dart';
+import 'package:doctor_appointment/core/utils/app_extensions.dart';
 import 'package:doctor_appointment/core/utils/colors_manager.dart';
 import 'package:doctor_appointment/core/utils/text_style.dart';
 import 'package:doctor_appointment/core/widgets/app_button.dart';
@@ -26,20 +27,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController emailController;
   late TextEditingController phoneController;
   String selectedGender = 'Male';
+
   final user = FirebaseAuth.instance.currentUser;
   String? photoUrl;
+
   late String? finalImage= photoUrl ?? user?.photoURL ;
 
   @override
   void initState() {
     super.initState();
-    nameController = TextEditingController(text: widget.editProfile?.fullName);
-    emailController = TextEditingController(text: widget.editProfile?.email);
-    phoneController = TextEditingController(
-      text: widget.editProfile?.phoneNumber,
-    );
-    selectedGender = widget.editProfile?.gender ?? 'Male';
-    photoUrl=widget.editProfile?.photoUrl ?? user?.photoURL;
+    final profile =widget.editProfile;
+
+    String initialName = (profile?.fullName!=null && profile!.fullName.isNotEmpty)?
+        profile.fullName:(user?.displayName ?? '');
+
+    String initialEmail=(profile?.email !=null && profile!.email.isNotEmpty)?
+        profile.email:(user?.email ?? '');
+    String initialPhone =(profile?.phoneNumber !=null && profile!.phoneNumber.isNotEmpty)?
+        profile.phoneNumber:(user?.phoneNumber ?? "");
+    nameController=TextEditingController(text: initialName);
+    emailController=TextEditingController(text: initialEmail);
+    phoneController=TextEditingController(text: initialPhone);
+
+    selectedGender = profile?.gender.isNotEmpty ==true ? profile!.gender:"Male";
+    photoUrl=profile?.photoUrl ?? user?.photoURL;
 
   }
 
@@ -53,6 +64,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final local = context.l1on;
     return MultiBlocProvider(
   providers: [
     BlocProvider(
@@ -64,7 +76,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   ],
   child: Scaffold(
         appBar: AppBar(
-          title: Text("Edit profile", style: TxtStyle.font14W700),
+          title: Text(local.edit_profile, style: context.isDark? TxtStyle.font18SemiBoldWhite:TxtStyle.font18SemiBold(context)),
           centerTitle: true,
           leading: IconButton(
             onPressed: () {
@@ -78,7 +90,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               onPressed: () {},
               icon: Icon(
                 Icons.notifications_outlined,
-                color: ColorsManager.primary,
+                color: context.isDark?ColorsManager.white:Colors.white70,
               ),
             ),
             SizedBox(width: 10),
@@ -95,7 +107,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       Icon(Icons.check_circle, color: Colors.white),
                       SizedBox(width: 10),
                       Text(
-                        "Profile updated successfully",
+                        local.profile_updated_success,
                         style: TxtStyle.font12W500,
                       ),
                     ],
@@ -129,20 +141,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           builder: (builder)=> Center(child: const CircularProgressIndicator()));
     }
     if (state is EditPhotoSuccessState){
-      SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Row(
           children: [
             Icon(Icons.check_circle, color: Colors.white),
             SizedBox(width: 10),
             Text(
-              "Image updated successfully",
+              local.image_updated_success,
               style: TxtStyle.font12W500,
             ),
           ],
         ),
         backgroundColor: ColorsManager.primary,
         duration: Duration(seconds: 2),
-      );
+      ));
 
     context.pop();
     }
@@ -199,8 +211,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   SizedBox(height: 5),
                   Center(
                     child: Text(
-                      'change profile photo',
-                      style: TxtStyle.font16W400Regular,
+                      local.change_profile_photo,
+                      style: TxtStyle.font14BoldBlue,
                     ),
                   ),
                   SizedBox(height: 30),
@@ -224,41 +236,39 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         spacing: 3,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Full name',style: TxtStyle.font14RegularBlue,),
+                          Text(local.full_name,style: TxtStyle.font14RegularBlue,),
                           CustomTextField(
                             controller: nameController,
-                            hintText: user?.displayName ?? ' ',
-                            textInput: (val) {
-                              return null;
-                            },
+                            hintText: (widget.editProfile?.fullName.isNotEmpty==true)?
+                            widget.editProfile!.fullName:(user?.displayName ?? 'Full Name'),
+                            textInput: (val) =>null,
                             prefixIcon: null,
                           ),
                           Divider(height: 20),
-                          Text('Email Address',style: TxtStyle.font14RegularBlue,),
+                          Text(local.email_address,style: TxtStyle.font14RegularBlue,),
                           CustomTextField(
-                            textInput: (val) {
-                              return null;
-                            },
+                            textInput: (val) =>null,
                             controller: emailController,
-                            hintText: user?.email ?? "noemail@nodomain.com",
+                            hintText: widget.editProfile?.email.isNotEmpty==true?
+                            widget.editProfile!.email:(user?.email ?? "noemail@nodomain.com"),
                           ),
                       
                           Divider(height: 20),
-                          Text('Phone Number',style: TxtStyle.font14RegularBlue,),
+                          Text(local.phone_number,style: TxtStyle.font14RegularBlue,),
                           CustomTextField(
-                            textInput: (val) {
-                              return null;
-                            },
+                            textInput: (val) =>null,
                             controller: phoneController,
-                            hintText: user?.phoneNumber ?? '+01 000 0000 0000',
+                            hintText: widget.editProfile?.phoneNumber.isNotEmpty==true?
+                            widget.editProfile!.phoneNumber:(user?.phoneNumber ?? "")
+                            ,
                           ),
                           Divider(height: 20),
-                          Text('Gender',style: TxtStyle.font14RegularBlue,),
+                          Text(local.gender,style: TxtStyle.font14RegularBlue,),
                           Row(
                             children: [
-                              Text("Gender", style: TxtStyle.font12W500),
+                              Text(local.gender, style: TxtStyle.font12W500),
                               Radio(
-                                value: "Male",
+                                value: local.male,
                                 groupValue: selectedGender,
                                 onChanged: (value) {
                                   setState(() {
@@ -266,9 +276,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   });
                                 },
                               ),
-                              Text("Male", style: TxtStyle.font12W500),
+                              Text(local.male, style: TxtStyle.font12W500),
                               Radio(
-                                value: "Female",
+                                value: local.female,
                                 groupValue: selectedGender,
                                 onChanged: (value) {
                                   setState(() {
@@ -276,7 +286,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   });
                                 },
                               ),
-                              Text("Female", style: TxtStyle.font12W500),
+                              Text(local.female, style: TxtStyle.font12W500),
                             ],
                           ),
                         ],
@@ -288,8 +298,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     builder: (context, state) => AppButton(
                       barWidth: 300.w,
                       txt: state is UpdateProfileLoadingState
-                          ? "Updating..."
-                          : "Update profile",
+                          ? local.updating
+                          : local.update_profile,
                       onPress: () {
                         context.read<MockProfileCubit>().updateUserData(
                           data: UserProfileModel(

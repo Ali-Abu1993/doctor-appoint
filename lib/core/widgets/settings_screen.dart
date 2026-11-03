@@ -66,11 +66,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 // 1. كارت الملف الشخصي المصغر
                 buildInfoTile(
                     Icons.person, user?.displayName ?? '', user?.email ?? '',
-                    context.isDark? TxtStyle.font15W600DarkBlue: TextStyle(
-                      color: Colors.white60,
-                      fontSize: 15,fontWeight: FontWeight.w600
-                    ),
-                    TxtStyle.font11BoldGrey
+                    TxtStyle.font12NormalGrey,TxtStyle.font15W600Black(context)
                 ),
 
                 const SizedBox(height: 24),
@@ -80,7 +76,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 buildSettingsGroup([
                   buildListTile(context,
                     icon: Icons.person_outline_rounded,
-                    title: local!.edit_profile,
+                    title: local.edit_profile,
                     subtitle: local.edit_profile_subtitle,
                     onTap: () {
                       context.pushNamed(AppRouter.editProfileScreen);
@@ -92,7 +88,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     title: local.security_and_password,
                     subtitle: local.security_subtitle,
                     onTap: () {
-                      context.goNamed(AppRouter.kChangePassScreen);
+                      context.push(AppRouter.kChangePassScreen);
                     },
                   ),
                   const Divider(height: 1, indent: 56),
@@ -258,44 +254,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'اختر لغة التطبيق',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-              ListTile(
-                title: const Text('العربية'),
-                trailing: selectedLanguage == 'العربية'
-                    ? const Icon(Icons.check, color: primaryBlue)
-                    : null,
-                onTap: () {
-                  setState(() => selectedLanguage = 'العربية');
-
-                  context.read<LocalizationCubit>().changeLanguage(const Locale('ar'));
-                  bool isRtl = Directionality.of(context) == TextDirection.rtl;
-                  debugPrint("Is Right-to-Left: $isRtl");
-                  context.pop(); // غلق الـ BottomSheet باستخدام GoRouter
-                },
-              ),
-              ListTile(
-                title: const Text('English'),
-                trailing: selectedLanguage == 'English'
-                    ? const Icon(Icons.check, color: primaryBlue)
-                    : null,
-                onTap: () {
-                  setState(() => selectedLanguage = 'English');
-                  bool isRtl = Directionality.of(context) == TextDirection.rtl;
-                  debugPrint("Is Right-to-Left: $isRtl");
-                  context.read<LocalizationCubit>().changeLanguage(const Locale('en'));
-                  context.pop();
-                },
-              ),
-            ],
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'اختر لغة التطبيق',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 16),
+                ListTile(
+                  title: const Text('العربية'),
+                  trailing: selectedLanguage == 'العربية'
+                      ? const Icon(Icons.check, color: primaryBlue)
+                      : null,
+                  onTap: () {
+                    setState(() => selectedLanguage = 'العربية');
+          
+                    context.read<LocalizationCubit>().changeLanguage(const Locale('ar'));
+                    bool isRtl = Directionality.of(context) == TextDirection.rtl;
+                    debugPrint("Is Right-to-Left: $isRtl");
+                    context.pop(); // غلق الـ BottomSheet باستخدام GoRouter
+                  },
+                ),
+                ListTile(
+                  title: const Text('English'),
+                  trailing: selectedLanguage == 'English'
+                      ? const Icon(Icons.check, color: primaryBlue)
+                      : null,
+                  onTap: () {
+                    setState(() => selectedLanguage = 'English');
+                    bool isRtl = Directionality.of(context) == TextDirection.rtl;
+                    debugPrint("Is Right-to-Left: $isRtl");
+                    context.read<LocalizationCubit>().changeLanguage(const Locale('en'));
+                    context.pop();
+                  },
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -303,19 +301,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void showLogoutDialog(BuildContext context) {
+    final local = context.l1on;
     showDialog(
       context: context,
       builder: (context) =>
           AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16)),
-            title: const Text('Log out'),
-            content: const Text('Are you sure you want to log out?'),
+            title:  Text(local.logout),
+            content:  Text(local.confirm_logout),
             actions: [
               TextButton(
                 onPressed: () => context.pop(),
-                child: const Text(
-                    'Cancel', style: TextStyle(color: Colors.grey)),
+                child:  Text(
+                    local.cancel, style: TextStyle(color: Colors.grey)),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -328,8 +327,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   context.pop();
                   // context.go('/login'); // التوجه لصفحة تسجيل الدخول بـ GoRouter
                 },
-                child: const Text(
-                    'Logging out', style: TextStyle(color: Colors.white)),
+                child:  Text(
+                    local.logging_out, style: TextStyle(color: Colors.white)),
               ),
             ],
           ),

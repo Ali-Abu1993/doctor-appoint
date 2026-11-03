@@ -104,11 +104,11 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                         if (state is AllDoctorSuccessState) {
                           return Card(
                             elevation: 0,
-                            color: isDark?Colors.white:Colors.grey.shade300,
+                            color: isDark?Colors.white:Colors.grey.shade800,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                               side: BorderSide(
-                                color: isDark?Colors.grey.shade300:Colors.white70,
+                                color: isDark?Colors.grey:Colors.white70,
                                 width: 1,
                               ),
                             ),
@@ -120,6 +120,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                 SizedBox(height: 20),
                                 CircleAvatar(
                                   radius: 60,
+                                  backgroundColor: isDark? Colors.grey.shade800:Colors.white70,
                                   child: ClipRRect(
                                     borderRadius: BorderRadiusGeometry.circular(
                                       50,
@@ -132,10 +133,10 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                         alignment: Alignment.center,
                                         errorBuilder:
                                             (context, error, stackTrace) {
-                                              return const Icon(
+                                              return Icon(
                                                 Icons.account_circle,
                                                 size: 50,
-                                                color: Colors.grey,
+                                                color: isDark? Colors.grey: Colors.white70,
                                               );
                                             },
                                       ),
