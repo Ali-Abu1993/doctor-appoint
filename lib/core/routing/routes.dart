@@ -10,6 +10,7 @@ import 'package:doctor_appointment/features/auth/presentation/register_screen.da
 import 'package:doctor_appointment/features/doctor_details/presentation/doctor_details.dart';
 import 'package:doctor_appointment/features/home/data/doctors_model.dart';
 import 'package:doctor_appointment/features/home/presentation/home_screen.dart';
+import 'package:doctor_appointment/features/splash/splash_screen.dart';
 import 'package:doctor_appointment/features/user_edit_profile/data/user_profile_model.dart';
 import 'package:doctor_appointment/features/user_edit_profile/presentation/edit_profile_screen.dart';
 import 'package:doctor_appointment/features/user_edit_profile/presentation/user_profile.dart';
@@ -20,6 +21,7 @@ import 'package:go_router/go_router.dart';
 abstract class AppRouter {
   // تعريف أسماء المسارات كـ Constants لمنع الأخطاء الإملائية
   static const kLoginScreen = '/';
+  static const kSplashScreen = '/splash';
   static const kSignUpScreen = '/signup';
   static const kAllDoctorScreen = '/all_doctors';
   static const kDoctorDetailScreen = '/doctor_details';
@@ -32,8 +34,12 @@ abstract class AppRouter {
 
 
   static final router = GoRouter(
-    initialLocation: kProfileScreen,
+    initialLocation: kSplashScreen,
     routes: [
+      GoRoute(path:kSplashScreen,
+        name: kSplashScreen,
+      builder: (state,context)=>SplashScreen()),
+
       GoRoute(path: kSignUpScreen,
     name : kSignUpScreen,
     builder: (context, state)=> RegisterScreen()),

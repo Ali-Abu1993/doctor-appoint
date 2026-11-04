@@ -120,7 +120,9 @@ String getGreeting(BuildContext context){
                       child: Text(local.profile)),
                   PopupMenuItem(value: 3,
                       child: Text(local.logout),
-                  onTap: (){context.read<AuthCubit>().signOut();}
+                  onTap: (){context.read<AuthCubit>().signOut();
+                    context.push(AppRouter.kLoginScreen);
+                    }
                     ,)
 
                 ],

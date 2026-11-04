@@ -324,7 +324,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
                 onPressed: () {
-                  context.pop();
+                  context.read<AuthCubit>().signOut();
+                  context.go(AppRouter.kLoginScreen);
                   // context.go('/login'); // التوجه لصفحة تسجيل الدخول بـ GoRouter
                 },
                 child:  Text(

@@ -74,7 +74,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         },
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: Colors.white,
+
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
               child: SafeArea(
