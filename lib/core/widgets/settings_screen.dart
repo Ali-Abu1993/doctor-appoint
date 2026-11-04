@@ -145,10 +145,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         showLanguageBottomSheet(context);
 
                       }),
-                  Text(
-                    "Current Language: ${Localizations.localeOf(context).languageCode}",
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  )
+                  // Text(
+                  //   "Current Language: ${Localizations.localeOf(context).languageCode}",
+                  //   style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  // )
                 ]
 
                 ),
